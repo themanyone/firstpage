@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en-US"><head data-headings="php">
+<!DOCTYPE html><html lang="en-US"><head data-headings="help">
 <meta charset="utf-8"><!-- -*- coding: utf-8 -*- -->
-<title>FirstPage</title>
+<title>About FirstPage</title>
 <meta property="og:title" content="FirstPage" />
 <meta name="copyright" content="© 2017 Henry Kroll www.thenerdshow.com" />
 <meta name="description" content="SEO, content management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!" />

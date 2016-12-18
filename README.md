@@ -1,6 +1,6 @@
-headings:       markdown,html
+headings:       docs
 permalink:      //raw.githubusercontent.com/themanyone/firstpage/master/README.md
-title:          FirstPage
+title:          README
 description:    SEO, content management, and blogging using conventional files.
 
 # FirstPage
