@@ -17,7 +17,7 @@ Brought to you by [The Nerd Show](//thenerdshow.com/)
 * Use [GitHub as a blogging platform](#use-github-as-a-blogging-platform)
 * [Unlimited styles and layouts](#adding-new-styles)
 * Support [responsive web design](#supports-responsive-web-design)
-* Click menus [without page reload](#no-page-reloads)
+* Rewrites links [so they don't reload the page](#fewer-page-reloads)
 * Automatic [keyword generation](#automatic-keyword-generation)
 * Works without a database
 * Deploy and back up easily
@@ -42,11 +42,11 @@ data-url="http://foo.com/file" | Get from foo.com (no cache).
 
 The menu only looks at files on the server. If you want to add remote files to the menu there are several ways to do this.
 
-1. Cache the remote content. This requires creating a *HTML shortcut*, basically an HTML file containing the necessary `<head data-cache` and optional `data-expires` headers. 
+* Cache the remote content. This requires creating a *HTML shortcut*, basically an HTML file containing the necessary `<head data-cache` and optional `data-expires` headers. 
 
-2. Link the remote content. Create a *HTML shortcut* with the appropriate `<head data-url="..."` header. FrontPage will use the shortcut's, title, description, and URL in the menu.
+* Link the remote content. Create a *HTML shortcut* with the appropriate `<head data-url="..."` header. FrontPage will use the shortcut's, title, description, and URL in the menu.
 
-3. Hoard (mirror) the remote content. Copy the remote content to the server and keep it there. This may have to be manually updated from time to time.
+* Hoard (mirror) the remote content. Copy the remote content to the server and keep it there. This may have to be manually updated from time to time.
 
 ## HTML Shortcuts
 
@@ -81,7 +81,7 @@ title : The Nerd Show
 description : Nerd stuff...
 url : https://thenerdshow.com
 ```
-The above shortcut instruct FirstPage to put a link to The Nerd Show in the menu. Try it! There are no other restrictions on what can go in a shortcut. This README is actually a cache shortcut that FirstPage uses to display a more up-to-date copy of itself in the menu under "docs".
+The above shortcut instruct FirstPage to put a link to The Nerd Show in the menu. The order of the elements is not critical. Try it! There are no real restrictions on what can go in a shortcut. This README is actually a cache shortcut that FirstPage uses to cache a more up-to-date copy of itself in the menu under "docs".
 
 ## Use GitHub as a Blogging Platform
 
@@ -121,9 +121,11 @@ You may test this project
 * using `ruby -run -ehttpd . -p8000&`
 * or with [many other test servers](http://unix.stackexchange.com/questions/32182/simple-command-line-http-server).
 
-## Smoother Browsing without Reloads
+## Fewer Page Reloads
 
-When Javascript is available the menu uses AJAX XMLHTTPRequest to create a RESTful user experience. This saves bandwidth and avoids tiresome page reloads that leave competitor's sites blank in the event of internet congestion. Choose an item from the menu and watch. The page does not reload!
+When Javascript is available FirstPage uses AJAX XMLHTTPRequest to create a RESTful user experience. This saves bandwidth and avoids tiresome page reloads that leave competitor's sites blank in the event of bad links or internet congestion. Click on any internal links, or menu links and watch. The page does not reload!
+
+An arrow ![Arrow](images/externallink.png) pops up when the user mouses over links that require a page reload.
 
 ## Adding New Styles
 

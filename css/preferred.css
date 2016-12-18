@@ -78,7 +78,7 @@ code,pre {
    text-overflow: ellipsis;
 }
 /* pop-out external link indicator */
-a[href^="http"]:hover:not(.myButton):not(.socIcon) {
+a:hover:not([href^="javas"]):not([href*="#"]):not(.btn) {
     background: url('../images/externallink.png') center right no-repeat;
     padding-right: 13px;
 }
