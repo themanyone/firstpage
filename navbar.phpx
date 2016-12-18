@@ -88,7 +88,7 @@ class navbar {
          $few = isSet($few)? $few : 4;
          $update = $now - filemtime($f);
          touch($f); // touch myself
-         // update every few hours
+         // update after a few hours
          if ($update > $few * $hrs) {
             // ignore any errors
             if ($c = @file_get_contents($url)) {
@@ -199,9 +199,8 @@ class navbar {
       if (!file_exists($this->nav)) return 1;
       $hrs = 3600; $now = time();
       $update = $now - filemtime($this->nav);
-      // update every few hours
-      if ($update > $few * $hrs) return 1;
-      return 0;
+      // update after a few hours
+      return ($update > $few * $hrs);
    }
    
    public function display(){
@@ -264,9 +263,26 @@ function toggleNav(){
       }         
    }
 }
+
+function rewriteLinks(docContent){
+   // dynamic links
+   var btns = jqa("nav .sub a")
+   forAll(btns, function(e){
+      var lnk = "javascript:fetch('"+e.href+"')";
+      // console.log(e.innerText);
+      var repl = new RegExp(
+         "([^0-9A-Za-z])"+e.innerText+"([^0-9A-Za-z])", "g");
+      docContent.innerHTML = docContent.innerHTML.replace(
+         repl, "$1<a href=\""+lnk+"\">"+e.innerText+"</a>$2");
+   });
+}
 // rewrite navbar http links to use XHR displayIt
 (function(){
    "use strict";
+   // rewrite page links to use this
+   window.fetch = function(u){
+      XHR(u, displayIt);
+   };
    function displayIt(e){
       function getKeywords(e){
          var obj = {}; var out=[], ret=[];
@@ -318,21 +334,23 @@ function toggleNav(){
          var docContent = jq(".content"); var eleContent = tmpDiv.jq(".content");
          if (docContent && eleContent) docContent.innerHTML = eleContent.innerHTML;
          else docContent.innerHTML = tmpDiv.innerHTML;
+         rewriteLinks(docContent);
          // count content keywords
          var words = docContent.innerText.replace(/\W+/g, " ").trim().split(" ");
          jq("meta[name=\"keywords\"]").content = getKeywords(words);
       }
    }
+   // rewrite menu for RESTful click without page load
    jEvent(window, "load", function(){
       forAll(jqa("nav .sub a"), function(e){
          jEvent(e, "click", function(u){
             if (e.href.substr(0, 4) == "http") {
                u.preventDefault();
-               // load e.href into .content
-               XHR(e.href, displayIt);
+               fetch(e.href);
             }
          }, false);
       });
+      rewriteLinks(jq(".content"));
  <?php if (navbar::$styles) { ?>     
       // put alternate styles on menu
       var sl = jq("nav > ul > li:last-child");

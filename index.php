@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en-US"><head data-headings="help">
 <meta charset="utf-8"><!-- -*- coding: utf-8 -*- -->
-<title>About FirstPage</title>
+<title>FirstPage</title>
 <meta property="og:title" content="FirstPage" />
 <meta name="copyright" content="© 2017 Henry Kroll www.thenerdshow.com" />
 <meta name="description" content="SEO, content management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!" />
@@ -54,34 +54,34 @@ $navbar = new navbar;
       </p>
      
       <ul>
-         <li>No more bad links</li>
          <li>Supports <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
-         <li>Automatic keyword generation</li>
-         <li>Menus, files update themselves</li>
+         <li>The menus update themselves</li>
+         <li>Cache management for remote pages</li>
          <li>Unlimited styles and layouts</li>
+         <li>Automatic keyword generation</li>
          <li>Support responsive web design</li>
          <li>Deploy and back up easily</li>
          <li>No database required or used</li>
          <li>Update via GIT, FTP, panel, etc.</li>
-         <li>Cache management for remote pages</li>
       </ul>
 
       <h2>Why This Exists</h2>
 
-      <p>We developed several <a href="https://github.com/themanyone">GitHub projects</a> and synchronizing our website with <a href="README.md">README.md</a> from each project became tiresome. Browsers routinely cache the result of AJAX queries for many hours anyway, unless <a href="http://www.itgeared.com/articles/1401-ajax-browser-cache-issues-fix/">instructed to do otherwise</a>, so there is nothing wrong with having a website fetch markdown from GitHub <a href="https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols">or custom git server</a> and convert it to HTML on demand. Then we had another thought. Why not serve even more content in <a href="https://help.github.com/enterprise/2.8/user/articles/basic-writing-and-formatting-syntax/">markdown format</a>?</p>
+      <p><b>Less duplicate work.</b> We develop dozens of <a href="https://github.com/themanyone">GitHub projects</a> ourselves and syndicating them to a dozen websites and mirrors with hundreds of files each became tiresome. We did not want the additional complexity of a database on top of all that. We like being able to back up our websites with a quick copy. Keep it simple, stupid!</p>
+      
+      <p><b>Reduced server overhead.</b> Browsers routinely cache the result of AJAX queries for many hours, unless <a href="http://www.itgeared.com/articles/1401-ajax-browser-cache-issues-fix/">instructed to do otherwise</a>, so there is nothing wrong with having websites update themselves and fetch content dynamically. In fact, there are several advantages.</p>
 
-      <h2>The FirstPage Menu</h2>
+      <h2>The Menus Update Themselves</h2>
        
-       <p>FirstPage outputs a standards-compliant css-styled horizontal or vertical <code>&lt;nav&gt;</code> element with drop-down button menus that fall back to bullet lists for older browsers. The menu lets documents decide which menu headings they belong under by way of data-headings (see README). When Javascript is available the menu uses AJAX to create a RESTful user experience. This saves bandwidth and avoids potentially-troublesome page reloads that leave competitor's sites <em>blank</em> in the event of internet congestion. Choose an item from the menu and watch. The page does not reload!</p>
+       <p>The FirstPage menus track files and update themselves, so they always reflect actual server contents. They let documents decide which menu headings they belong under by way of data-headings (see README). When Javascript is available the menus use AJAX to create a RESTful user experience. This saves bandwidth and avoids potentially-troublesome page reloads that leave competitor's sites <em>blank</em> in the event of internet congestion. Choose an item from the menu and watch. The page does not reload! FirstPage outputs standards-compliant css-styled horizontal or vertical <code>&lt;nav&gt;</code> elements with drop-down button menus that fall back to bullet lists for older browsers.</p>
       
       <h2>Caching Remote Files</h2>
       
-      <p>The FirstPage content management system can cache remote content using <i>web shortcuts</i>, placeholder files that tell FirstPage where to get the content. See the README for details. There are two types of web shortcuts, url shortcuts and cache shortcuts. There are no restrictions on what can go in a shortcut. README is itself a cache shortcut that maintains a cached version of itself under `README.md.cache`.</p>
+      <p>The FirstPage content management system can cache remote content using <i>web shortcuts</i>, placeholder files that tell FirstPage where to get the content. See <code>README.md</code> for details. There are two types of web shortcuts, url shortcuts and cache shortcuts. There are no restrictions on what can go in a shortcut. <code>README.md</code> is itself a cache shortcut that maintains a cached version of itself under <code>README.md.cache</code>.</p>
       
       <h2>Future Developments Coming Soon!</h2>
       
       <ul>
-         <li>Insert links to documents mentioned in the text</li>
          <li>More styles :)</li>
       </ul>
       

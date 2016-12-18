@@ -8,7 +8,7 @@
       </ul></li>
    <li><a href='javascript:void(0);' class='btn'>help</a>
       <ul class='sub'>
-         <li><a class='btn' href="index.php" title="management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!">About FirstPage</a></li>
+         <li><a class='btn' href="index.php" title="management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!">FirstPage</a></li>
       </ul></li>
 </ul></nav>
 
