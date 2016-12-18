@@ -92,7 +92,7 @@ class navbar {
          if ($update > $few * $hrs) {
             // ignore any errors
             if ($c = @file_get_contents($url)) {
-               file_put_contents($f."cache", $c);
+               file_put_contents($f.".cache", $c);
             }
          }
          return $f.".cache";

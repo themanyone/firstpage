@@ -53,8 +53,6 @@ $navbar = new navbar;
       <p>SEO, content management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!
       </p>
      
-     <h2>Advantages</h2>
-      
       <ul>
          <li>No more bad links</li>
          <li>Supports <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
@@ -70,15 +68,15 @@ $navbar = new navbar;
 
       <h2>The FirstPage Menu</h2>
        
-       <p>FirstPage outputs a standards-compliant css-styled horizontal or vertical <code>&lt;nav&gt;</code> element with drop-down button menus that fall back to bullet lists for older browsers. The menu lets documents decide which menu headings they belong under by way of data-headings (see below). When Javascript is available the menu uses AJAX <code>XMLHTTPRequest</code> to create a RESTful user experience. This saves bandwidth and avoids potentially-troublesome page reloads that leave competitor's sites <em>blank</em> in the event of internet congestion. Choose an item from the menu and watch. The page does not reload!</p>
+       <p>FirstPage outputs a standards-compliant css-styled horizontal or vertical <code>&lt;nav&gt;</code> element with drop-down button menus that fall back to bullet lists for older browsers. The menu lets documents decide which menu headings they belong under by way of data-headings (see README). When Javascript is available the menu uses AJAX to create a RESTful user experience. This saves bandwidth and avoids potentially-troublesome page reloads that leave competitor's sites <em>blank</em> in the event of internet congestion. Choose an item from the menu and watch. The page does not reload!</p>
       
-      <h2>Content Management</h2>
+      <h2>Caching Remote Files</h2>
       
-      <p>The FirstPage content management system caches files that classify themselves as permalinks. The caching function only works with permalinked HTML or Markdown files. Placeholders for other types of files can be inserted into the menu using url: header. The file will load from the supplied remote URL.</p>
+      <p>The FirstPage content management system can cache remote content using web shortcuts, placeholder files that tell FirstPage where to get the content. See the README for details. There are two types of web shortcuts, url shortcuts and cache shortcuts. There are no restrictions on what can go in a shortcut. README is itself a cache shortcut that maintains a cached version of itself under `README.md.cache`.</p>
       
       <h2>Menu Data Labels</h2>
       
-      <p><b>FirstPage</b> finds and indexes HTML documents using <code>&lt;head data-[label]</code> headers to <em>create menu entries</em>. Data-labels tell FirstPage what to do with documents, where to list them on menus, and whether it should cache and update them from a url, or always fetch their contents from an external source. It is important to label your files, so FirstPage can organize them. Files without labels go into an <em>Other</em> menu category where they may not show up because this feature can be turned off.</p>
+      <p><b>FirstPage</b> finds and indexes HTML documents using <code>&lt;head data-[label]</code> headers to <em>create menu entries</em>. Data-labels tell FirstPage what to do with documents, where to list them on menus, and whether it should cache them from a url, or always fetch their contents from an external source. It is important to label your files, so FirstPage can organize them. Files without labels go into an <em>Other</em> menu category where they may not show up because this feature can be turned off.</p>
       
       <table>
 <caption>Data Labels for HTML Documents</caption>
@@ -101,19 +99,6 @@ $navbar = new navbar;
 <tr>  <td>expires&colon; x </td><td>Fetch new copy after x hours.</td></tr>
 <tr>  <td>headings&colon; foo bar </td><td>List under foo and bar headings.</td></tr>
       </table>
-      
-      <h2>About permalinked documents</h2>
-
-      <p>FirstPage maintains a cached copy of permalinked documents to guarantee links will never go bad. Put data-permalink header in BOTH local and permalinked files! (Modify the remote file and then copy it to the server).</p>
-
-<code>for .md files:           permalink: http://...<br>
-for .html files: &lt;head data-permalink="http://...</code>
-
-      <p>Cached files update by default every 4 hours. to modify this behavior use an expires: header.</p>
-
-<code># Expire cached copy after 24 hours:<br>
-for .md files:                expires: 24<br>
-for .html files: &lt;head data-expires= 24</code>
       
       <h2>Future Developments Coming Soon!</h2>
       
