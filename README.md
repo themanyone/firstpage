@@ -1,5 +1,5 @@
 headings:       markdown,html
-permalink:      //github.com/themanyone/firstpage/README.md
+permalink:      //raw.githubusercontent.com/themanyone/firstpage/master/README.md
 title:          FirstPage
 description:    SEO, content management, and blogging using conventional files.
 

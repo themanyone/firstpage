@@ -81,20 +81,19 @@ class navbar {
       
       $hrs = 3600; $now = time();
       if (substr($f, -2) == "md") {
-         $url_str = $this->tsearch($c, ['/^permalink\s*:\W+(.*)/']);
-         $few_str = $this->tsearch($c, ['/^expires\s*:\W+(.*)/']);
+         $url = $this->tsearch($c, ['/^permalink\s*:\s*(.*)/']);
+         $few = $this->tsearch($c, ['/^expires\s*:\s*(.*)/']);
       } else {
-         $url_str = $this->tsearch($c, ['/data-permalink\s*=\s*"([^"]+)"/']);
-         $few_str = $this->tsearch($c, ['/data-expires\s*=\s*"([^"]+)"/']);
+         $url = $this->tsearch($c, ['/data-permalink\s*=\s*"([^"]+)"/']);
+         $few = $this->tsearch($c, ['/data-expires\s*=\s*"([^"]+)"/']);
       }
-      if ($url_str){
-         $few = isSet($few_str[1])? $few_str[1] : 4;
+      if ($url){
+         $few = isSet($few)? $few : 4;
          $update = $now - filemtime($f);
          // update every few hours
          if ($update > $few * $hrs) {
-            $url = $url_str[0];
             // ignore any errors / try again later
-            if ($c = file_get_contents($url))
+            if ($c = file_get_contents("https:".$url))
                file_put_contents($f, $c);
    }  }  }
    
@@ -106,10 +105,10 @@ class navbar {
       // header for .md files:         url: http://...
       // header for .html files: <head data-url="http://...
       if (substr($f, -2) == "md")
-         $url_str = $this->tsearch($c, ['/^url\s*:\W+(.*)/']);
+         $url_str = $this->tsearch($c, ['/^url\s*:\s*(.*)/']);
       else
          $url_str = $this->tsearch($c, ['/data-url\s*=\s*"([^"]+)"/']);
-      return $url_str? $url_str[0] : "";
+      return $url_str? $url_str : "";
    }
    
    private function getLinks($f){

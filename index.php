@@ -83,10 +83,10 @@ $navbar = new navbar;
       <table>
 <caption>Data Labels for HTML Documents</caption>
 <thead><tr>    <td>data-label</td><td>what it does</td>   </tr></thead>
-<tr>  <td>data-permalink="URL"</td><td>Cache contents from URL.</td>       </tr>
-<tr>  <td>data-url="URL"</td><td>Fetch from URL (do not cache).</td>       </tr>
-<tr>  <td>data-expires="x"</td><td>Fetch new copy after x hours.</td></tr>
-<tr>  <td>data-headings="foo bar"</td><td>List under foo and bar headings.</td></tr>
+<tr>  <td>data&dash;permalink="URL"</td><td>Cache contents from URL.</td>       </tr>
+<tr>  <td>data&dash;url="URL"</td><td>Fetch from URL (do not cache).</td>       </tr>
+<tr>  <td>data&dash;expires="x"</td><td>Fetch new copy after x hours.</td></tr>
+<tr>  <td>data&dash;headings="foo bar"</td><td>List under foo and bar headings.</td></tr>
       </table>
       
       <h2>Markdown Conventions</h2>
@@ -95,11 +95,11 @@ $navbar = new navbar;
       
       <table>
 <caption>Markdown Data Labels</caption>
-<thead><tr>    <td>label:</td><td>what it does</td>   </tr></thead>
-<tr>  <td>permalink: URL</td><td>Cache contents from URL.</td>       </tr>
-<tr>  <td>url: URL</td><td>Fetch from URL (do not cache).</td>       </tr>
-<tr>  <td>expires: x </td><td>Fetch new copy after x hours.</td></tr>
-<tr>  <td>headings: foo bar </td><td>List under foo and bar headings.</td></tr>
+<thead><tr>    <td>label&colon;</td><td>what it does</td>   </tr></thead>
+<tr>  <td>permalink&colon; URL</td><td>Cache contents from URL.</td>       </tr>
+<tr>  <td>url&colon; URL</td><td>Fetch from URL (do not cache).</td>       </tr>
+<tr>  <td>expires&colon; x </td><td>Fetch new copy after x hours.</td></tr>
+<tr>  <td>headings&colon; foo bar </td><td>List under foo and bar headings.</td></tr>
       </table>
       
       <h2>About permalinked documents</h2>
