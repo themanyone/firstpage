@@ -93,7 +93,7 @@ class navbar {
          // update every few hours
          if ($update > $few * $hrs) {
             // ignore any errors / try again later
-            if ($c = file_get_contents("https:".$url))
+            if ($c = file_get_contents($url))
                file_put_contents($f, $c);
    }  }  }
    

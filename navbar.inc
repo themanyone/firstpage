@@ -4,7 +4,7 @@
    <li class='rot'><a title="menu rotation" href="javascript:toggleNav();"></a></li>
    <li><a href='javascript:void(0);' class='btn'>docs</a>
       <ul class='sub'>
-         <li><a class='btn' href="README.md" title="SEO, content management, and blogging using conventional files.">FirstPage</a></li>
+         <li><a class='btn' href="README.md" title="SEO, content management, and blogging using conventional files.">README</a></li>
       </ul></li>
    <li><a href='javascript:void(0);' class='btn'>help</a>
       <ul class='sub'>

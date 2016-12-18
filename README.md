@@ -1,5 +1,5 @@
 headings:       docs
-permalink:      //raw.githubusercontent.com/themanyone/firstpage/master/README.md
+permalink:      https://raw.githubusercontent.com/themanyone/firstpage/master/README.md
 title:          README
 description:    SEO, content management, and blogging using conventional files.
 
@@ -9,7 +9,6 @@ SEO, content management, and blogging using conventional files. Drop files onto 
 
 Brought to you by [The Nerd Show](//thenerdshow.com/)
 
-* No more bad links
 * Menus [update themselves](#menus-update-themselves)
 * [Cache management](#use-github-as-a-blogging-platform) for remote pages
 * Supports [Markdown](#supports-markdown) and HTML.
@@ -18,7 +17,7 @@ Brought to you by [The Nerd Show](//thenerdshow.com/)
 * Support [responsive web design](#supports-responsive-web-design)
 * Click menus [without page reload](#no-page-reloads)
 * Automatic [keyword generation](#automatic-keyword-generation)
-* No database required or used
+* Works without a database
 * Deploy and back up easily
 * Update via [GIT](//git-scm.com/download/win), FTP, panel, etc.
 
@@ -26,7 +25,7 @@ This project is now **[available on GitHub](//github.com/themanyone/firstpage)**
 
 ## No More Bad Links
 
-**FirstPage** puts a pretty face on your existing content with menus that update themselves. Build the website just by uploading files. FirstPage scans for new, removed, or renamed files periodically, updating the menus using the document's existing meta tags. Update the server with proven content versioning systems like GIT or plain old uploads via FTP or server panel. There is no need to update the menu!
+**FirstPage** indexes existing content with menus that update themselves. Build a website by uploading files. FirstPage scans for new, removed, or renamed files periodically, updating the menus using the document's existing meta tags. Update the server with proven content versioning systems like GIT or plain old uploads via FTP or server panel. There is no need to update the menu!
 
 ## Menus Update Themselves
 
@@ -45,9 +44,9 @@ data-url="//foo.com/file"  | Download from foo.com (no cache).
 
 The menu only looks at files on the server. If you want to add remote files to the menu there are at least *three ways* to do this.
 
-1. Cache the remote content. This requires access to the remote file in order to add the necessary `data-permalink` header. Otherwise as soon as the cache updates the `data-permalink` header will be gone! Copy the file to the server *once* and it should update itself from time to time (default every 4 hours).
+1. Cache the remote content. This requires writing to the remote file in order to add the necessary `data-permalink` header. Otherwise as soon as the cache updates the `data-permalink` header will be overwritten. Copy the file to the server *once* and it should update itself from time to time (default every 4 hours).
 
-2. Create a permanent local copy just like we did in step 1 by trying to cache a remote file we do not own. This may have to be manually updated from time to time.
+2. Create a permanent local copy like we did in step 1 by trying to cache a remote file we do not own. This may have to be manually updated from time to time.
 
 3. Create data-url placeholder (web shortcut) file with the appropriate `<head data-url="//somewhere..."` headers. FrontPage will list the supplied, title, description, and URL in the menu. It may be easier to use Markdown for this (see below).
 
