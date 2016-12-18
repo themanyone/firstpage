@@ -84,7 +84,7 @@ These headers instruct FirstPage to create a menu link with title and descriptio
 
 ## Use GitHub as a Blogging Platform
 
-Using the above headers we can upload markdown to GitHub and link to it with a permalink: or url: server shortcuts. Copy the server shortcuts to the server *once* and the server will forever track them and keep their contents updated as they change on GitHub. **Cached files** with permalink: header will persist even if the remote files are deleted! If you do not have access to change the remote file to add a permalink: header to it, use the url : header instead. **URL files** are never cached.
+Using the above headers we can upload markdown to GitHub and add a permalink: header to it, or create a url: shortcut. Put these on the server *once* and the server will track updates as they change on GitHub. **Cached files** with permalink: header will persist even if the remote files are deleted! If you do not have access to change the remote file to add a permalink: header to it, use the url : shortcut instead. **URL shortcuts** are never cached.
 
 ## Automatic Keyword Generation
 
