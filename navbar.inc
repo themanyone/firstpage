@@ -1,6 +1,6 @@
 
 <nav><ul>
-   <li class='home'><a title="go home" href="./">home</a></li>
+   <li class='home'><a title="go home" href="/">home</a></li>
    <li class='rot'><a title="menu rotation" href="javascript:toggleNav();"></a></li>
    <li><a href='javascript:void(0);' class='btn'>docs</a>
       <ul class='sub'>

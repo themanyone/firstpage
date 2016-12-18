@@ -87,7 +87,7 @@ class navbar {
       if ($url){
          $few = isSet($few)? $few : 4;
          $update = $now - filemtime($f);
-         touch($f, $now); // touch myself
+         touch($f); // touch myself
          // update every few hours
          if ($update > $few * $hrs) {
             // ignore any errors
@@ -309,10 +309,10 @@ function toggleNav(){
       var tmpDiv = document.createElement("div");
       if (tmpDiv) {
          // put markdown into temporary div
-         if (e.responseURL.substr(-2) == "md") {
+         if (e.responseURL.substr(-2) == "md"
+         || e.responseURL.substr(-8) == "md.cache") {
             // strip off markdown headers
-            tmpDiv.innerHTML = marked(e.responseText.replace(/[\w\-]+:[^:\n]+\n/g, ""));
-            var heads = e.responseText.match(/[\w\-]+:[^:\n]+/g);
+            tmpDiv.innerHTML = marked(e.responseText.replace(/([\w\-]+:.+\n)*/, ""));
          } else tmpDiv.innerHTML = e.responseText;
          // copy content or HTML to content
          var docContent = jq(".content"); var eleContent = tmpDiv.jq(".content");

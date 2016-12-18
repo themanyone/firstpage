@@ -66,39 +66,17 @@ $navbar = new navbar;
          <li>Cache management for remote pages</li>
       </ul>
 
+      <h2>Why This Exists</h2>
+
+      <p>We developed several <a href="https://github.com/themanyone">GitHub projects</a> and synchronizing our website with <a href="README.md">README.md</a> from each project became tiresome. Browsers routinely cache the result of AJAX queries for many hours anyway, unless <a href="http://www.itgeared.com/articles/1401-ajax-browser-cache-issues-fix/">instructed to do otherwise</a>, so there is nothing wrong with having a website fetch markdown from GitHub <a href="https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols">or custom git server</a> and convert it to HTML on demand. Then we had another thought. Why not serve even more content in <a href="https://help.github.com/enterprise/2.8/user/articles/basic-writing-and-formatting-syntax/">markdown format</a>?</p>
+
       <h2>The FirstPage Menu</h2>
        
        <p>FirstPage outputs a standards-compliant css-styled horizontal or vertical <code>&lt;nav&gt;</code> element with drop-down button menus that fall back to bullet lists for older browsers. The menu lets documents decide which menu headings they belong under by way of data-headings (see README). When Javascript is available the menu uses AJAX to create a RESTful user experience. This saves bandwidth and avoids potentially-troublesome page reloads that leave competitor's sites <em>blank</em> in the event of internet congestion. Choose an item from the menu and watch. The page does not reload!</p>
       
       <h2>Caching Remote Files</h2>
       
-      <p>The FirstPage content management system can cache remote content using web shortcuts, placeholder files that tell FirstPage where to get the content. See the README for details. There are two types of web shortcuts, url shortcuts and cache shortcuts. There are no restrictions on what can go in a shortcut. README is itself a cache shortcut that maintains a cached version of itself under `README.md.cache`.</p>
-      
-      <h2>Menu Data Labels</h2>
-      
-      <p><b>FirstPage</b> finds and indexes HTML documents using <code>&lt;head data-[label]</code> headers to <em>create menu entries</em>. Data-labels tell FirstPage what to do with documents, where to list them on menus, and whether it should cache them from a url, or always fetch their contents from an external source. It is important to label your files, so FirstPage can organize them. Files without labels go into an <em>Other</em> menu category where they may not show up because this feature can be turned off.</p>
-      
-      <table>
-<caption>Data Labels for HTML Documents</caption>
-<thead><tr>    <td>data-label</td><td>what it does</td>   </tr></thead>
-<tr>  <td>data&dash;permalink="URL"</td><td>Cache contents from URL.</td>       </tr>
-<tr>  <td>data&dash;url="URL"</td><td>Fetch from URL (do not cache).</td>       </tr>
-<tr>  <td>data&dash;expires="x"</td><td>Fetch new copy after x hours.</td></tr>
-<tr>  <td>data&dash;headings="foo bar"</td><td>List under foo and bar headings.</td></tr>
-      </table>
-      
-      <h2>Markdown Conventions</h2>
-      
-      <p><b>FirstPage</b> finds and displays markdown (<code>*.md</code>) documents using the popular <a href="https://guides.github.com/features/mastering-markdown/">GitHub Markdown</a> format, allowing people to make web pages easily using an intuitive, wiki-like syntax. Markdown data labels are a lot like HTML data labels. Put these optional headers at the top of markdown files so FirstPage can index them.</p>
-      
-      <table>
-<caption>Markdown Data Labels</caption>
-<thead><tr>    <td>label&colon;</td><td>what it does</td>   </tr></thead>
-<tr>  <td>permalink&colon; URL</td><td>Cache contents from URL.</td>       </tr>
-<tr>  <td>url&colon; URL</td><td>Fetch from URL (do not cache).</td>       </tr>
-<tr>  <td>expires&colon; x </td><td>Fetch new copy after x hours.</td></tr>
-<tr>  <td>headings&colon; foo bar </td><td>List under foo and bar headings.</td></tr>
-      </table>
+      <p>The FirstPage content management system can cache remote content using <i>web shortcuts</i>, placeholder files that tell FirstPage where to get the content. See the README for details. There are two types of web shortcuts, url shortcuts and cache shortcuts. There are no restrictions on what can go in a shortcut. README is itself a cache shortcut that maintains a cached version of itself under `README.md.cache`.</p>
       
       <h2>Future Developments Coming Soon!</h2>
       

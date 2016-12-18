@@ -11,6 +11,7 @@ SEO, content management, and blogging using conventional files. Drop files onto 
 Brought to you by [The Nerd Show](//thenerdshow.com/)
 
 * Menus [update themselves](#menus-update-themselves)
+* Reduce duplicate work
 * [Cache management](#use-github-as-a-blogging-platform) for remote pages
 * Supports [Markdown](#supports-markdown) and HTML.
 * Use [GitHub as a blogging platform](#use-github-as-a-blogging-platform)
@@ -90,18 +91,40 @@ Using the above headers we can upload markdown to GitHub and drop shortcuts on t
 
 After picking an item from the menu, FirstPage inserts a `<meta>` keywords tag. Developers can view this using the "inspect element" function in developer tools. Modern search engines index these dynamically-created pages, and some of them check keywords against the actual content to make sure no one is gaming the system and inserting irrelevant keywords such as Kanye West.
 
+## Automatic Meta Tag Generation
+
+If there are no meta tags in the document, FirstPage will attempt to create them dynamically as it displays different pages from the menus.
+
+* `#` Heading at start of page becomes the &lt;title&gt; tag.
+* The first sentence becomes the website description.
+* Google [apparently indexes](http://searchengineland.com/tested-googlebot-crawls-javascript-heres-learned-220157) these automatically generated tags.
+
 ## Supports Responsive Web Design
 
 The sky is the limit! Since FirstPage leaves existing content alone and merely builds menus and displays them, there is no reason not to [modify the stylesheets and files any way you see fit](//www.mezzoblue.com/zengarden/alldesigns/). Go nuts! [Responsive web resign is recommended](//www.w3schools.com/css/css_rwd_mediaqueries.asp) for mobile browsing.
 
+## Installation
+
+1. Get [FirstPage from GitHub](https://github.com/themanyone/firstpage)
+1. Optionally update [marked.js](https://github.com/chjj/marked).
+2. See that the latest marked.min.js is in the js folder of this project.
+3. Edit this README.md or replace with custom markdown.
+3. Copy this project to a web server.
+
 ## Testing
 
+You may test this project
 
+* by running `python3 -m http.server&`
+* by running `php -S addr:port&`
+* with `webfsd -F -p 8000&`
+* using `ruby -run -ehttpd . -p8000&`
+* or with [many other test servers](http://unix.stackexchange.com/questions/32182/simple-command-line-http-server).
 
-## No page reloads
+## Smoother Browsing without Reloads
 
-When Javascript is available the menu uses AJAX XMLHTTPRequest to create a RESTful user experience. This saves bandwidth and avoids potentially-troublesome page reloads that leave competitor's sites blank in the event of internet congestion. Choose an item from the menu and watch. The page does not reload!
+When Javascript is available the menu uses AJAX XMLHTTPRequest to create a RESTful user experience. This saves bandwidth and avoids tiresome page reloads that leave competitor's sites blank in the event of internet congestion. Choose an item from the menu and watch. The page does not reload!
 
 ## Adding New Styles
 
-Add alternate stylesheet tags to FrontPage's `index.html` and these alternate styles will show up in the menu. This feature may be turned off in navbar.phpx.
+Add alternate stylesheet tags to FrontPage's `index.html` and these alternate styles will show up in the menu. This feature may be turned off in `navbar.phpx`.
