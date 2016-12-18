@@ -1,5 +1,6 @@
 headings:      docs
 cache:         https://raw.githubusercontent.com/themanyone/firstpage/master/README.md
+expires:       24
 title:         README
 description:   SEO, content management, and blogging using conventional files.
 
@@ -36,15 +37,19 @@ data-cache="http://foo.com"    | Show cached copy of foo.com
 data-expires=4                 | Fetch new copy after 4 hours.
 data-url="http://foo.com/file" | Get from foo.com (no cache).
 
-## HTML Shortcuts
+## Managing Remote Content
 
 The menu only looks at files on the server. If you want to add remote files to the menu there are several ways to do this.
 
-1. Cache the remote content. This requires creating a *HTML shortcut*, basically an HTML file containing the necessary `data-cache` and optional `data-expires` headers.
+1. Cache the remote content. This requires creating a *HTML shortcut*, basically an HTML file containing the necessary `<head data-cache` and optional `data-expires` headers. 
 
-2. Link the remote content. Create a *HTML shortcut* with the appropriate `<head data-url="..."` header. FrontPage will use the shortcut's, title, description, and URL in the menu. It may be easier to use Markdown for this (see below).
+2. Link the remote content. Create a *HTML shortcut* with the appropriate `<head data-url="..."` header. FrontPage will use the shortcut's, title, description, and URL in the menu.
 
-3. Hoard the remote content. Copy the remote content to the server and keep it there. This may have to be manually updated from time to time.
+3. Hoard (mirror) the remote content. Copy the remote content to the server and keep it there. This may have to be manually updated from time to time.
+
+## HTML Shortcuts
+
+Shortcuts can be in either HTML or Markdown format. It may be easier to use Markdown for this (see the next section).
 
 ```
 <html><head
@@ -56,7 +61,7 @@ data-headings="remote files, nerd stuff">
 
 ## Supports Markdown
 
-FirstPage finds and displays markdown (*.md) documents with [marked.js](//github.com/chjj/marked) using the popular [GitHub Markdown format](//guides.github.com/features/mastering-markdown), allowing people to make web pages easily using an intuitive, wiki-like syntax. Markdown data labels are a lot like HTML data labels. Put these optional headers at the top of markdown files so FirstPage can index them.
+FirstPage finds and displays markdown (*.md) documents with [marked.js](//github.com/chjj/marked) using the popular [GitHub Markdown format](//guides.github.com/features/mastering-markdown), allowing people to make web pages easily using an intuitive, wiki-like syntax. Markdown headers are a lot like HTML headers. Put these optional headers at the top of markdown files so FirstPage can better index them.
 
 header     | what it does
 -----------|-------------
@@ -67,15 +72,15 @@ url : http://foo.com/file | Download from foo.com (no cache).
 
 ## Markdown Shortcuts
 
-To add a remote file link to the menu, create a placeholder (a web shortcut) for it and upload it to the server. Placeholder files can be in either HTML or Markdown format.
+To add a remote file link to the menu, create a placeholder (a web shortcut) for it and upload it to the server. Shortcuts can be in either HTML or Markdown format.
 
 ```
 headings : remote files, nerd stuff
 title : The Nerd Show
 description : Nerd stuff...
-url : //thenerdshow.com
+url : https://thenerdshow.com
 ```
-These headers instruct FirstPage to create a menu link with title and description pointing to url.
+The above shortcut instruct FirstPage to put a link to The Nerd Show in the menu. Try it! There are no other restrictions on what can go in a shortcut. This README is actually a cache shortcut that FirstPage uses to display a more up-to-date copy of itself in the menu under "docs".
 
 ## Use GitHub as a Blogging Platform
 
@@ -88,6 +93,10 @@ After picking an item from the menu, FirstPage inserts a `<meta>` keywords tag. 
 ## Supports Responsive Web Design
 
 The sky is the limit! Since FirstPage leaves existing content alone and merely builds menus and displays them, there is no reason not to [modify the stylesheets and files any way you see fit](//www.mezzoblue.com/zengarden/alldesigns/). Go nuts! [Responsive web resign is recommended](//www.w3schools.com/css/css_rwd_mediaqueries.asp) for mobile browsing.
+
+## Testing
+
+
 
 ## No page reloads
 

@@ -175,7 +175,7 @@ class navbar {
       // (re)build the menu
       $f = fopen($this->nav, 'w+');
       fwrite($f, "\n<nav><ul>\n");
-      fwrite($f, "   <li class='home'><a title=\"go home\" href=\"./\">".
+      fwrite($f, "   <li class='home'><a title=\"go home\" href=\"/\">".
       "home</a></li>\n");
       fwrite($f, "   <li class='rot'><a title=\"menu rotation\"".
                " href=\"javascript:toggleNav();\"></a></li>\n");
