@@ -62,15 +62,12 @@ class navbar {
       } return "";
    }
    
-   private function permaLink($f, $c){
-      // FirstPage maintains a cached copy of permalinked documents
-      // to guarantee links will never go bad.
+   private function cache($f, $c){
+      // FirstPage can maintain a cached copy of documents.
+      // Cached copies will have '.cache' appended to the end.
       
-      // Put data-permalink header in BOTH local and remote files!
-      // (Modify the remote file and then copy it to the server).
-      
-      // header for .md files:         permalink: http://...
-      // header for .html files: <head data-permalink="http://...
+      // header for .md files:         cache: http://...
+      // header for .html files: <head data-cache="http://...
       
       // cached files update by default every 4 hours
       // to change this use expires: header
@@ -81,21 +78,26 @@ class navbar {
       
       $hrs = 3600; $now = time();
       if (substr($f, -2) == "md") {
-         $url = $this->tsearch($c, ['/^permalink\s*:\s*(.*)/']);
+         $url = $this->tsearch($c, ['/^cache\s*:\s*(.*)/']);
          $few = $this->tsearch($c, ['/^expires\s*:\s*(.*)/']);
       } else {
-         $url = $this->tsearch($c, ['/data-permalink\s*=\s*"([^"]+)"/']);
+         $url = $this->tsearch($c, ['/data-cache\s*=\s*"([^"]+)"/']);
          $few = $this->tsearch($c, ['/data-expires\s*=\s*"([^"]+)"/']);
       }
       if ($url){
          $few = isSet($few)? $few : 4;
          $update = $now - filemtime($f);
+         touch($f, $now); // touch myself
          // update every few hours
          if ($update > $few * $hrs) {
-            // ignore any errors / try again later
-            if ($c = file_get_contents($url))
-               file_put_contents($f, $c);
-   }  }  }
+            // ignore any errors
+            if ($c = @file_get_contents($url)) {
+               file_put_contents($f."cache", $c);
+            }
+         }
+         return $f.".cache";
+      } else return "";
+   }
    
    private function fetchRemote($f, $c){
       // Always fetch (do not cache) a remote file
@@ -114,7 +116,7 @@ class navbar {
    private function getLinks($f){
       // get suggested menu headings, title, and description
       $c = file_get_contents($f);
-      $this->permaLink($f, $c);
+      $remote = $this->cache($f, $c);
       // get comma-separated list of menu headings
       $heads = array();
       if (substr($f, -2) == "md")
@@ -139,7 +141,7 @@ class navbar {
       if (!$description) $description = "No Description";
       if (!$title) $title = $f->getFileName();
       // check if document describes a remote URL
-      $remote = ""; //$this->fetchRemote($f, $c);
+      if (!$remote) $remote = $this->fetchRemote($f, $c);
       // build the menu link object
       $link = new link;
       $link->headings = $heads;

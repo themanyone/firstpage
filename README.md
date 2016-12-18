@@ -1,7 +1,7 @@
-headings:       docs
-permalink:      https://raw.githubusercontent.com/themanyone/firstpage/master/README.md
-title:          README
-description:    SEO, content management, and blogging using conventional files.
+headings:      docs
+cache:         https://raw.githubusercontent.com/themanyone/firstpage/master/README.md
+title:         README
+description:   SEO, content management, and blogging using conventional files.
 
 # FirstPage
 
@@ -23,32 +23,28 @@ Brought to you by [The Nerd Show](//thenerdshow.com/)
 
 This project is now **[available on GitHub](//github.com/themanyone/firstpage)**.
 
-## No More Bad Links
-
-**FirstPage** indexes existing content with menus that update themselves. Build a website by uploading files. FirstPage scans for new, removed, or renamed files periodically, updating the menus using the document's existing meta tags. Update the server with proven content versioning systems like GIT or plain old uploads via FTP or server panel. There is no need to update the menu!
-
 ## Menus Update Themselves
 
-** FirstPage** finds and indexes HTML documents and lists them in the menu using a `<head data-headings=` header to organize pages under the appropriate menu headings. This is probably the only header you need to use. Look at the source of this page for an example.
+**FirstPage** indexes existing content with menus that update themselves. Build a website by uploading files. FirstPage scans for new, removed, or renamed files periodically, updating the menus. A <head data-headings=` header tells FristPage what category headings to list them under. This is probably the only header you need to use. Update the server with proven content versioning systems like GIT or plain old uploads via FTP or server panel. There is no need to update the menu!
 
 FirstPage can also cache and update documents from a url, or always fetch their contents from an external source. Files without labels go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
 
 header     | what it does
 -----------|-------------
-data-headings="foo, bar"   | List under foo and bar headings.
-data-permalink="//foo.com" | Display cached copy of foo.com
-data-expires=4             | Fetch new copy after 4 hours.
-data-url="//foo.com/file"  | Download from foo.com (no cache).
+data-headings="foo, bar"       | List under foo and bar headings.
+data-cache="http://foo.com"    | Show cached copy of foo.com
+data-expires=4                 | Fetch new copy after 4 hours.
+data-url="http://foo.com/file" | Get from foo.com (no cache).
 
-## Example HTML Shortcut
+## HTML Shortcuts
 
-The menu only looks at files on the server. If you want to add remote files to the menu there are at least *three ways* to do this.
+The menu only looks at files on the server. If you want to add remote files to the menu there are several ways to do this.
 
-1. Cache the remote content. This requires writing to the remote file in order to add the necessary `data-permalink` header. Otherwise as soon as the cache updates the `data-permalink` header will be overwritten. Copy the file to the server *once* and it should update itself from time to time (default every 4 hours).
+1. Cache the remote content. This requires creating a *HTML shortcut*, basically an HTML file containing the necessary `data-cache` and optional `data-expires` headers.
 
-2. Create a permanent local copy like we did in step 1 by trying to cache a remote file we do not own. This may have to be manually updated from time to time.
+2. Link the remote content. Create a *HTML shortcut* with the appropriate `<head data-url="..."` header. FrontPage will use the shortcut's, title, description, and URL in the menu. It may be easier to use Markdown for this (see below).
 
-3. Create data-url placeholder (web shortcut) file with the appropriate `<head data-url="//somewhere..."` headers. FrontPage will list the supplied, title, description, and URL in the menu. It may be easier to use Markdown for this (see below).
+3. Hoard the remote content. Copy the remote content to the server and keep it there. This may have to be manually updated from time to time.
 
 ```
 <html><head
@@ -64,12 +60,12 @@ FirstPage finds and displays markdown (*.md) documents with [marked.js](//github
 
 header     | what it does
 -----------|-------------
-headings : foo, bar   | List under foo and bar headings.
-permalink : //foo.com | Display cached copy of foo.com
-expires : 4           | Fetch new copy after 4 hours.
-url : //foo.com/file  | Download from foo.com (no cache).
+headings : foo, bar       | List under foo and bar headings.
+cache : http://foo.com    | Display cached copy of foo.com
+expires : 4               | Fetch new copy after 4 hours.
+url : http://foo.com/file | Download from foo.com (no cache).
 
-## Example Markdown Shortcut
+## Markdown Shortcuts
 
 To add a remote file link to the menu, create a placeholder (a web shortcut) for it and upload it to the server. Placeholder files can be in either HTML or Markdown format.
 
@@ -83,11 +79,11 @@ These headers instruct FirstPage to create a menu link with title and descriptio
 
 ## Use GitHub as a Blogging Platform
 
-Using the above headers we can upload markdown to GitHub and add a permalink: header to it, or create a url: shortcut. Put these on the server *once* and the server will track updates as they change on GitHub. **Cached files** with permalink: header will persist even if the remote files are deleted! If you do not have access to change the remote file to add a permalink: header to it, use the url : shortcut instead. **URL shortcuts** are never cached.
+Using the above headers we can upload markdown to GitHub and drop shortcuts on the web server. The server will track updates as they change on GitHub. **Cached files** with cache: header will persist even if the remote files are deleted! If you do not want to keep cached copies around, use the url : shortcut instead. **URL shortcuts** are never cached.
 
 ## Automatic Keyword Generation
 
-After choosing an item from the menu, FirstPage inserts a `<meta>` keywords tag. Developers can view this using the "inspect element" function in developer tools. Modern search engines index these dynamically-created pages, and some of them check keywords against the actual content to make sure no one is gaming the system and inserting irrelevant keywords such as Kanye West.
+After picking an item from the menu, FirstPage inserts a `<meta>` keywords tag. Developers can view this using the "inspect element" function in developer tools. Modern search engines index these dynamically-created pages, and some of them check keywords against the actual content to make sure no one is gaming the system and inserting irrelevant keywords such as Kanye West.
 
 ## Supports Responsive Web Design
 
