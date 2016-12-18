@@ -27,7 +27,7 @@ This project is now **[available on GitHub](//github.com/themanyone/firstpage)**
 
 ## Menus Update Themselves
 
-**FirstPage** indexes existing content with menus that update themselves. Build a website by uploading files. FirstPage scans for new, removed, or renamed files periodically, updating the menus. A <head data-headings=` header tells FristPage what category headings to list them under. This is probably the only header you need to use. Update the server with proven content versioning systems like GIT or plain old uploads via FTP or server panel. There is no need to update the menu!
+**FirstPage** indexes existing content with menus that update themselves. Build a website by uploading files. FirstPage scans for new, removed, or renamed files periodically, updating the menus. A <head data-headings=` header tells FristPage what category headings to list them under. This is probably the only header you need to use.
 
 FirstPage can also cache and update documents from a url, or always fetch their contents from an external source. Files without labels go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
 
