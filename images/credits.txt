@@ -1,0 +1,3 @@
+Obtained from Fedora Project oxygen-icon-theme https://quickgit.kde.org/?p=oxygen-icons5.git
+License     : LGPLv3+
+Recolorized by Henry Kroll www.thenerdshow.com

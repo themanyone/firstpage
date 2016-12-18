@@ -1,0 +1,45 @@
+@import url("preferred.css?v=1");
+nav .btn {
+   color: white;
+   font-weight: bold;
+   border: 0;
+   white-space: nowrap;
+   background-color: transparent;
+   background-image:url('button_green.png');
+   background-repeat: no-repeat;
+   background-size: 200% 100%;
+   background-position: 0 0;
+}
+nav .btn:hover {
+	background-size: 200% 100%;
+	background-position: 100% 0;
+}
+nav > ul > li > a {
+   background-color: transparent;
+}
+nav > ul > li > .btn:before {
+   background-image:url('xmas/snowflake18.gif');
+   background-repeat: no-repeat;
+   height:18px;
+   width:18px;
+   float:left;
+   content: '';
+   transition: all 0.5s ease-in-out;
+}
+nav > ul > li > .btn:hover:before {
+   /* background-position:0 0; */
+   -moz-transform:     rotate(60deg);
+   -webkit-transform:  rotate(60deg);
+   -o-transform:       rotate(60deg);
+   -ms-transform:      rotate(60deg);
+   transform:          rotate(60deg);
+}
+body {
+   background-image:url('xmas/christmas-background-with-gifts-and-baubles_1048-3438.jpg');
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-size: 100% 100%;
+}
+.content {
+   background-color: rgba(255,255,255,0.8);
+}

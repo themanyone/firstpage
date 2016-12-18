@@ -1,0 +1,36 @@
+nav ul {
+   list-style-type: none;
+   padding: 0;
+   margin: 0;
+}
+nav > ul > li {
+   display: inline-block;
+   vertical-align: top;
+}
+nav a {
+   height: 19px;
+   display: inline-block;
+   text-decoration: none;
+   background-color: #ADD8E6;
+   background-repeat: no-repeat;
+   background-position: 2px 2px;
+   padding: 1px 1px 0 1px;
+}
+nav li.home > a {
+   background-image: url('b_home.png');
+   width:18px;
+   color: transparent;
+}
+nav li.rot > a {
+   background-image: url('rotate18.png');
+   width:18px;
+}
+nav .sub {
+   display: none;
+   position: absolute;
+   overflow-y: auto;
+   z-index: 10;
+}
+nav > ul > li:hover > .sub {
+   display: block;
+}

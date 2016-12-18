@@ -1,0 +1,356 @@
+<?php
+/*
+ * navbar.phpx
+ * 
+ * Builds drop-down CSS3 menus by scanning files in server directories.
+ * Caches the menu for 4 hours (default). See configuration below.
+ * 
+ * Copyright (C) 2017 by Henry Kroll http://thenerdshow.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ * 
+ */
+class link {
+   var $headings;
+   var $src;
+   var $title;
+   var $description;
+}
+class navbar {
+   // whether to list documents with missing "data-headings" attribute
+   // if set to true FirstPage will list them under "other" menu heading
+   // if set to false it won't list uncategorized documents at all!
+   private $other = true;
+   
+   // whether to show styles menu item
+   public static $styles = true;
+   
+   // name of cached navbar file
+   // navbar not updating? touch -t 0 navbar.inc
+   private $nav = "navbar.inc";
+   private $filetypes = ['md', 'html', 'php'];
+   private $headings = array();
+   private $links = array();
+   
+   private function tsearch($contents, $patterns, $top = 10){
+      // Search top of contents string for array of patterns
+      $lines = split("\n", $contents, $top);
+      if (count($lines) < $top) $top = count($lines);
+      if (!$top) return "";
+      $found = array();
+      foreach ($patterns as $p){
+         foreach ($lines as $l){
+            preg_match($p, $l, $found);
+            if (isSet($found[1])) return $found[1];
+         }
+      } return "";
+   }
+   
+   private function permaLink($f, $c){
+      // FirstPage maintains a cached copy of permalinked documents
+      // to guarantee links will never go bad.
+      
+      // Put data-permalink header in BOTH local and remote files!
+      // (Modify the remote file and then copy it to the server).
+      
+      // header for .md files:         permalink: http://...
+      // header for .html files: <head data-permalink="http://...
+      
+      // cached files update by default every 4 hours
+      // to change this use expires: header
+      
+      // expire cached copy after 24 hours
+      // expires header for .md files:              expires: 24
+      // expires header for .html files: <head data-expires= 24
+      
+      $hrs = 3600; $now = time();
+      if (substr($f, -2) == "md") {
+         $url_str = $this->tsearch($c, ['/^permalink\s*:\W+(.*)/']);
+         $few_str = $this->tsearch($c, ['/^expires\s*:\W+(.*)/']);
+      } else {
+         $url_str = $this->tsearch($c, ['/data-permalink\s*=\s*"([^"]+)"/']);
+         $few_str = $this->tsearch($c, ['/data-expires\s*=\s*"([^"]+)"/']);
+      }
+      if ($url_str){
+         $few = isSet($few_str[1])? $few_str[1] : 4;
+         $update = $now - filemtime($f);
+         // update every few hours
+         if ($update > $few * $hrs) {
+            $url = $url_str[0];
+            // ignore any errors / try again later
+            if ($c = file_get_contents($url))
+               file_put_contents($f, $c);
+   }  }  }
+   
+   private function fetchRemote($f, $c){
+      // Always fetch (do not cache) a remote file
+      
+      // Put data-url header in local file
+      
+      // header for .md files:         url: http://...
+      // header for .html files: <head data-url="http://...
+      if (substr($f, -2) == "md")
+         $url_str = $this->tsearch($c, ['/^url\s*:\W+(.*)/']);
+      else
+         $url_str = $this->tsearch($c, ['/data-url\s*=\s*"([^"]+)"/']);
+      return $url_str? $url_str[0] : "";
+   }
+   
+   private function getLinks($f){
+      // get suggested menu headings, title, and description
+      $c = file_get_contents($f);
+      $this->permaLink($f, $c);
+      // get comma-separated list of menu headings
+      $heads = array();
+      $heads_str = $this->tsearch($c, ['/data-headings\s*=\s*"([^"]+)"/',
+      '/^headings\s*:\W+(.*)/']);
+      // represent headings as an array
+      if ($heads_str) {
+         $heads = preg_split("/,\s*/", $heads_str);
+         foreach ($heads as $head) array_push($this->headings, $head);
+      } else if ($this->other) {
+         $heads = ["other"];
+         array_push($this->headings, "other");
+      }
+      // get title and description
+      $title = $this->tsearch($c, ['/^title:\W*(.{3,23})\W*/', '/^#+\s*(.{3,23})/',
+                     '/\s*<title>\W*(.{3,23})\W*<\/title>/',
+                     '/<h.>\s*(.{3,23})\s*<\/h.>/', '/^\W*([\w\s]{10,23})$/']);
+      $description =  $this->tsearch($c, ['/^description:\s*(.*)/', 
+               '/name[ ="\']*description.*content[ ="\']+([^"\']*)/',
+               '/<p>\s*(.*)\s*<\/p>/', '/^([^#:><]{25}.*)/']);
+      if (!$description) $description = "No Description";
+      if (!$title) $title = $f->getFileName();
+      // check if document describes a remote URL
+      $remote = ""; //$this->fetchRemote($f, $c);
+      // build the menu link object
+      $link = new link;
+      $link->headings = $heads;
+      $link->title = $title;
+      $link->description = $description;
+      $link->src = $remote? $remote : $f->getFileName();
+      // push it onto links array
+      array_push($this->links, $link);
+   }
+   
+   private function scan(){
+      // scan the folder for documents
+      foreach (new DirectoryIterator(".") as $f) { // iterator
+         if (in_array($f->getExtension(), $this->filetypes) ) { // in $this->filetypes
+            // do something here
+            if ($f->isFile()) {
+               $this->getLinks($f);
+   }  }  }  }
+   
+   private function sort(){
+      $this->headings=array_unique($this->headings);
+      sort($this->headings);
+      if (false != ($op = array_search("other", $this->headings))){
+         //move other to end
+         array_splice($this->headings, $op, 1);
+         array_push($this->headings, "other");
+      }
+   }
+   
+   public function update(){
+      // (re)build the menu
+      $f = fopen($this->nav, 'w+');
+      fwrite($f, "\n<nav><ul>\n");
+      fwrite($f, "   <li class='home'><a title=\"go home\" href=\"./\">".
+      "home</a></li>\n");
+      fwrite($f, "   <li class='rot'><a title=\"menu rotation\"".
+               " href=\"javascript:toggleNav();\"></a></li>\n");
+      foreach ($this->headings as $heading){
+         fwrite($f, "   <li><a href='javascript:void(0);' class='btn'>".
+                     "$heading</a>\n");
+         fwrite($f, "      <ul class='sub'>\n");
+         foreach ($this->links as $link){
+            // does it belong under this heading?
+            if (in_array($heading, $link->headings))
+            fwrite($f, "         <li><a class='btn' href=\"$link->src\"".
+                 " title=\"$link->description\">$link->title</a></li>\n");
+         }
+         fwrite($f, "      </ul></li>\n");
+      } fwrite($f, "</ul></nav>\n\n");
+      fclose($f);
+   }
+   
+   private function needs_update($few = 1){
+      // doesn't exist? needs update
+      if (!file_exists($this->nav)) return 1;
+      $hrs = 3600; $now = time();
+      $update = $now - filemtime($this->nav);
+      // update every few hours
+      if ($update > $few * $hrs) return 1;
+      return 0;
+   }
+   
+   public function display(){
+      echo file_get_contents($this->nav);
+   }
+   
+   function __construct(){
+      if ($this->needs_update()){
+         $this->scan();
+         $this->sort();
+         $this->update();
+      }
+      $this->display();
+   }}
+?>
+<script>
+function toggleNav(e){
+   "use strict";
+   var nav; if (nav = jq("nav")){
+      var content = jq(".content");
+      var cs = content.style;
+      var ns = nav.style;
+      // go horizontal
+      if (ns.width){
+         // set explicity for css animation effect
+         cs.left = nav.getBoundingClientRect().left+"px";
+         cs.top = jq(".rot").getBoundingClientRect().bottom+"px";
+         ns.width ="";
+         setTimeout(function(){cs.position = "";}, 1000);
+      forAll(jqa("nav > ul > li > a"))(
+         function (e){ e.style.width=""; });
+      forAll(jqa(".sub"), function(e){ e.style.top = e.style.left=""; });
+      } else {
+      // go vertical
+         var w = 0; // widest
+         forAll(jqa("nav > ul > li > a"))(
+            function (e){
+               var gw = e.getBoundingClientRect().width
+               if (gw > w) w = gw;
+            });
+         var c = 0;
+         // widen the buttons to w px
+         forAll(jqa("nav > ul > li > a"))(
+            function (e){ if (c++ > 1) e.style.width=w+"px"; });
+         // set top and left twice for css animation
+         // cs.marginRight = "7px";
+         cs.position = "absolute";
+         cs.top = content.getBoundingClientRect().top+"px";
+         cs.left = content.getBoundingClientRect().left+"px";
+         cs.top = nav.getBoundingClientRect().top+"px";
+         cs.left = w+15+"px";
+         // shrink menu width to button width w
+         ns.width = w+"px";
+         // move all sub menus off to the right
+         forAll(jqa(".sub"), function(e){
+            var pe = e.parentElement.getBoundingClientRect();
+            e.style.top=pe.top+"px";
+            e.style.left=pe.right+"px";
+         });
+      }         
+   } e.preventDefault();
+}
+// rewrite navbar http links to use XHR displayIt
+(function(){
+   "use strict";
+   function displayIt(e){
+      function getKeywords(e){
+         var obj = {}; var out=[], ret=[];
+         /* count each keyword */
+         forAll(e)(function(e){
+             if (e.length > 3 &&!(e in obj.__proto__)) obj[e] = obj[e]?obj[e]+=1:1; });
+         /* stuff into array and sort */
+         obj.forAll(function(k,v){ if (k in Object.keys(obj)) out.push([k,v]); });
+         out = out.sort().reverse().slice(0,25);
+         out.forAll(function(e){ret.push(e[1]);});
+         return ret.join(" ");
+      }
+      function tsearch(contents, patterns, top = 10){
+         // Search top of contents string for array of patterns
+         var lines = contents.split("\n", top);
+         if (lines.length < top) top = lines.length;
+         if (!top) return "";
+         var found = [];
+         forAll (patterns, function(p){
+            forAll (lines, function(l){
+               var got = l.match(p);
+               if (got && got[1]) found.push(got[1]);
+            });
+         });
+         return found;
+      }
+      // get title and description
+      var c = e.responseText;
+      var isTitle = tsearch(c, [/^title:\W*(.{3,23})\W*/, /#+\s*(.{3,23})/,
+                     /\s*<title>\W*(.{3,23})\W*<\/title>/,
+                     /<h.>\s*(.{3,23})\s*<\/h.>/, /\W*([\w\s]{10,23})/]);
+      var isDesc = tsearch(c, [/^description:\s*(.*)/, 
+               /name[ ="\']*description.*content[ ="\']+([^"\']*)/,
+               /<p>\s*(.*)\s*<\/p>/, /^([^#:><]{25}.*)/]);
+      if (isTitle && isSet(isTitle[0])) document.title
+         = jq("meta[property=\"og:title\"]").content = isTitle[0];
+      if (isDesc && isSet(isDesc[0]))
+         jq("meta[name=\"description\"]").content = 
+         jq("meta[property=\"og:description\"]").content = isDesc[0];
+      var tmpDiv = document.createElement("div");
+      if (tmpDiv) {
+         // put markdown into temporary div
+         if (e.responseURL.substr(-2) == "md") {
+            // strip off markdown headers
+            tmpDiv.innerHTML = marked(e.responseText.replace(/[\w\-]+:[^:\n]+\n/g, ""));
+            var heads = e.responseText.match(/[\w\-]+:[^:\n]+/g);
+         } else tmpDiv.innerHTML = e.responseText;
+         // copy content or HTML to content
+         var docContent = jq(".content"); var eleContent = tmpDiv.jq(".content");
+         if (docContent && eleContent) docContent.innerHTML = eleContent.innerHTML;
+         else docContent.innerHTML = tmpDiv.innerHTML;
+         // count content keywords
+         var words = docContent.innerText.replace(/\W+/g, " ").trim().split(" ");
+         jq("meta[name=\"keywords\"]").content = getKeywords(words);
+      }
+   }
+   jEvent(window, "load", function(){
+      forAll(jqa("nav .sub a"), function(e){
+         jEvent(e, "click", function(u){
+            if (e.href.substr(0, 4) == "http") {
+               u.preventDefault();
+               // load e.href into .content
+               XHR(e.href, displayIt);
+            }
+         }, false);
+      });
+ <?php if (navbar::$styles) { ?>     
+      // put alternate styles on menu
+      var sl = jq("nav > ul > li:last-child");
+      var styles = jqa("link[rel=\"alternate stylesheet\"]");
+      var p = jq("link[rel=\"stylesheet\"][title=\"preferred\"]");
+      if (styles && p) styles["preferred"] = p;
+      var h = "";
+      forAll(styles, function(e){
+         h += '<li><a class="btn" href="javascript:setActiveStyleSheet(\''
+         + e.title + '\')">' + e.title + "</a></li>\n";
+      });
+      sl.insertAdjacentHTML('afterEnd', ' <li> <a href="javascript:void(0);"'
+      + 'class="btn">styles</a><ul class="sub">' + h + '</ul></li>');
+<?php } ?>
+   }, false);
+   marked.setOptions({
+     renderer: new marked.Renderer(),
+     gfm: true,
+     tables: true,
+     breaks: false,
+     pedantic: false,
+     sanitize: false,
+     smartLists: true,
+     smartypants: true
+   });
+})();
+</script>
