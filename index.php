@@ -23,6 +23,22 @@
 <script src="js/styleswitcher.js"></script>
 </head>
 <body>
+      
+<div style="margin:auto;width:728px;overflow:visible">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 728x90 black -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-6719667455972380"
+     data-ad-slot="7127218719"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div class="right"><script src="http://thenerdshow.com/social/mediaIcons.js?button0=&amp;button1=&amp;button2=&amp;button3=&amp;button4=&amp;button5=&amp;button12=&amp;button13=&amp;url13=//youtube.com/themanyone"></script>
+</div>
+
 <?php
 function __autoload($class_name) {
     require_once $class_name . '.phpx';
@@ -103,7 +119,6 @@ for .html files: &lt;head data-expires= 24</code>
       
       <ul>
          <li>Insert links to documents mentioned in the text</li>
-         <li>Test version is on the way; still fixing bugs</li>
          <li>More styles :)</li>
       </ul>
       

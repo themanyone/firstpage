@@ -1,4 +1,5 @@
 headings:       markdown,html
+permalink:      //github.com/themanyone/firstpage/README.md
 title:          FirstPage
 description:    SEO, content management, and blogging using conventional files.
 
@@ -19,7 +20,9 @@ Brought to you by [The Nerd Show](//thenerdshow.com/)
 * Automatic [keyword generation](#automatic-keyword-generation)
 * No database required or used
 * Deploy and back up easily
-* Update via GIT, FTP, panel, etc.
+* Update via [GIT](//git-scm.com/download/win), FTP, panel, etc.
+
+This project is now **[available on GitHub](//github.com/themanyone/firstpage)**.
 
 ## No More Bad Links
 
@@ -58,7 +61,7 @@ data-headings="remote files, nerd stuff">
 
 ## Supports Markdown
 
-FirstPage finds and displays markdown (*.md) documents using the popular [GitHub Markdown format](//guides.github.com/features/mastering-markdown), allowing people to make web pages easily using an intuitive, wiki-like syntax. Markdown data labels are a lot like HTML data labels. Put these optional headers at the top of markdown files so FirstPage can index them.
+FirstPage finds and displays markdown (*.md) documents with [marked.js](//github.com/chjj/marked) using the popular [GitHub Markdown format](//guides.github.com/features/mastering-markdown), allowing people to make web pages easily using an intuitive, wiki-like syntax. Markdown data labels are a lot like HTML data labels. Put these optional headers at the top of markdown files so FirstPage can index them.
 
 header     | what it does
 -----------|-------------

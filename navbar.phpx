@@ -23,6 +23,9 @@
  * MA 02110-1301, USA.
  * 
  */
+function console_log( $data ){
+  echo '<script>console.log('.json_encode( $data ).');</script>';
+}
 class link {
    var $headings;
    var $src;
@@ -115,8 +118,10 @@ class navbar {
       $this->permaLink($f, $c);
       // get comma-separated list of menu headings
       $heads = array();
-      $heads_str = $this->tsearch($c, ['/data-headings\s*=\s*"([^"]+)"/',
-      '/^headings\s*:\W+(.*)/']);
+      if (substr($f, -2) == "md")
+         $heads_str = $this->tsearch($c, ['/^headings\s*:\s*(.*)$/']);
+      else
+         $heads_str = $this->tsearch($c, ['/data-headings\s*=\s*"(.*)"/']);
       // represent headings as an array
       if ($heads_str) {
          $heads = preg_split("/,\s*/", $heads_str);
@@ -212,7 +217,7 @@ class navbar {
    }}
 ?>
 <script>
-function toggleNav(e){
+function toggleNav(){
    "use strict";
    var nav; if (nav = jq("nav")){
       var content = jq(".content");
@@ -256,7 +261,7 @@ function toggleNav(e){
             e.style.left=pe.right+"px";
          });
       }         
-   } e.preventDefault();
+   }
 }
 // rewrite navbar http links to use XHR displayIt
 (function(){
