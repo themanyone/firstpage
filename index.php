@@ -28,8 +28,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <link rel="stylesheet" type="text/css" href="css/navbar.css">
-<link rel="stylesheet" title="preferred" type="text/css" href="css/preferred.css">
-<link rel="alternate stylesheet" title="xmas" type="text/css" href="css/xmas.css">
+<link rel="stylesheet" title="preferred" type="text/css" href="css/preferred.css?v=1.1">
+<link rel="alternate stylesheet" title="xmas" type="text/css" href="css/xmas.css?v=1.1">
 <script src="js/include.js"></script>
 <script src="js/marked.min.js"></script>
 <script src="js/styleswitcher.js"></script>

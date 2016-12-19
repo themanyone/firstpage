@@ -115,10 +115,8 @@ The sky is the limit! Since FirstPage leaves existing content alone and merely b
 
 You may test this project
 
-* by running `python3 -m http.server&`
 * by running `php -S addr:port&`
-* with `webfsd -F -p 8000&`
-* using `ruby -run -ehttpd . -p8000&`
+* by coping it to a php web server.
 * or with [many other test servers](http://unix.stackexchange.com/questions/32182/simple-command-line-http-server).
 
 ## Fewer Page Reloads

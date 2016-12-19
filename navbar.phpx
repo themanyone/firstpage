@@ -92,13 +92,13 @@ class navbar {
       if ($url){
          $few = isSet($few)? $few : 4;
          $update = $now - filemtime($f);
-         touch($f); // touch myself
          // update after a few hours or if cache is missing
          if ($update > $few * $hrs || ! file_exists($f.".cache")) {
             // ignore any errors
-            if ($c = @file_get_contents($url)) {
+            if ($c = file_get_contents($url)) {
                file_put_contents($f.".cache", $c);
             }
+            touch($f); // touch myself
          }
          return $f.".cache";
       } else return "";
