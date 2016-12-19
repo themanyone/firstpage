@@ -39,9 +39,16 @@ class navbar {
    // whether to show styles menu item
    public static $styles = true;
    
+   // whether to rewrite menu to stop page reloads RESTfully
+   public static $rewriteMenu = true;
+   
+   // whether to automatically link menu titles within the text
+   public static $createLinks = true;
+   
    // name of cached navbar file
-   // navbar not updating? touch -t 0 navbar.inc
+   // navbar not updating? remove navbar.inc
    private $nav = "navbar.inc";
+   
    private $filetypes = ['md', 'html', 'php'];
    private $headings = array();
    private $links = array();
@@ -262,7 +269,7 @@ function toggleNav(){
    }
 }
 
-function rewriteLinks(docContent){
+function createLinks(docContent){
    // dynamic links
    var btns = jqa("nav .sub a")
    forAll(btns, function(e){
@@ -332,12 +339,13 @@ function rewriteLinks(docContent){
          var docContent = jq(".content"); var eleContent = tmpDiv.jq(".content");
          if (docContent && eleContent) docContent.innerHTML = eleContent.innerHTML;
          else docContent.innerHTML = tmpDiv.innerHTML;
-         rewriteLinks(docContent);
+         createLinks(docContent);
          // count content keywords
          var words = docContent.innerText.replace(/\W+/g, " ").trim().split(" ");
          jq("meta[name=\"keywords\"]").content = getKeywords(words);
       }
    }
+ <?php if (navbar::$rewriteMenu) { ?>  
    // rewrite menu for RESTful click without page load
    jEvent(window, "load", function(){
       forAll(jqa("nav .sub a"), function(e){
@@ -348,8 +356,9 @@ function rewriteLinks(docContent){
             }
          }, false);
       });
-      rewriteLinks(jq(".content"));
- <?php if (navbar::$styles) { ?>     
+ <?php } if (navbar::$createLinks) { ?>   
+      createLinks(jq(".content"));
+ <?php } if (navbar::$styles) { ?>     
       // put alternate styles on menu
       var sl = jq("nav > ul > li:last-child");
       var styles = jqa("link[rel=\"alternate stylesheet\"]");
