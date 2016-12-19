@@ -1,3 +1,4 @@
+@import url("navbar.css?v=1.2");
 html { height:100%; }
 body, thead {
    font-family: sans-serif;
@@ -39,9 +40,8 @@ table tr:nth-child(even){
    background-color: #CEE7F0;
 }
 .content {
-   display:block;
    background-color: #FFFFFF;
-   padding: 0 0.8em 0 0.8em;
+   padding: 0 5px 0 5px;
    float:left;
    transition: all 1s ease-in-out;
    -webkit-transition: all 1s ease-in-out; /** Chrome & Safari **/
@@ -70,12 +70,7 @@ a {
    text-decoration: none;
 }
 code,pre {
-   background-color: #ccc;
    background-color: rgba(255,255,255,0.8);
-   display:inline-block;
-   max-width:100%;
-   overflow: hidden;
-   text-overflow: ellipsis;
 }
 /* pop-out external link indicator */
 a:hover:not([href^="javas"]):not([href*="#"]):not(.btn) {

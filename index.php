@@ -27,22 +27,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<link rel="stylesheet" type="text/css" href="css/navbar.css">
-<link rel="stylesheet" title="preferred" type="text/css" href="css/preferred.css?v=1.1">
-<link rel="alternate stylesheet" title="xmas" type="text/css" href="css/xmas.css?v=1.1">
+<link rel="stylesheet" title="preferred" type="text/css" href="css/preferred.css?v=1.2">
+<link rel="alternate stylesheet" title="xmas" type="text/css" href="css/xmas.css?v=1.2">
+<link rel="alternate stylesheet" title="plain" type="text/css" href="css/plain.css?v=1.2">
 <script src="js/include.js"></script>
 <script src="js/marked.min.js"></script>
 <script src="js/styleswitcher.js"></script>
 </head>
 <body>
       
-<div style="margin:auto;width:728px;overflow:visible">
+<div style="margin:auto;width:99%">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- 728x90 black -->
+<!-- Responsive -->
 <ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
+     style="display:block"
      data-ad-client="ca-pub-6719667455972380"
-     data-ad-slot="7127218719"></ins>
+     data-ad-slot="4356826116"
+     data-ad-format="auto"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>

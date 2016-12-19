@@ -1,0 +1,38 @@
+
+table {
+border: 1px solid #1e5799;
+border-collapse: collapse;
+width: 90%;
+margin: auto;
+}
+
+.content {
+   display:block;
+   background-color: #FFFFFF;
+      padding: 0 5px 0 5px;
+   float:left;
+}
+/* responsive web design features */
+
+/* use available screen area if display shrinks below 600px */
+@media only screen and (max-width: 600px) {
+   .content {
+      width:calc(100% -10)px;
+      padding: 0 5px 0 5px;
+      margin: 0;
+   }
+   body {
+      margin: 0;
+      padding: 0;
+   }
+}
+
+/* use two column layout if screen grows past 900px */
+@media only screen and (min-width: 900px) {
+   .content {
+      -moz-column-count: 2;
+      -webkit-column-count: 2;
+      column-count: 2;
+      column-rule: inset #BFBFBF;
+   }
+}
