@@ -27,6 +27,10 @@ margin: auto;
    }
 }
 
+a.link {
+    text-decoration:underline;
+    border-bottom: 1px solid;
+}
 /* use two column layout if screen grows past 900px */
 @media only screen and (min-width: 900px) {
    .content {

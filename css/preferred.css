@@ -73,11 +73,14 @@ code,pre {
    background-color: rgba(255,255,255,0.8);
 }
 /* pop-out external link indicator */
-a:hover:not([href^="javas"]):not([href*="#"]):not(.btn) {
+.content a:hover:not([href^="javas"]):not([href^="#"]) {
     background: url('../images/externallink.png') center right no-repeat;
     padding-right: 13px;
 }
-
+a.link {
+    text-decoration:underline;
+    border-bottom: 1px solid;
+}
 /* responsive web design features */
 
 /* use available screen area if display shrinks below 600px */

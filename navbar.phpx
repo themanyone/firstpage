@@ -3,7 +3,6 @@
  * navbar.phpx
  * 
  * Builds drop-down CSS3 menus by scanning files in server directories.
- * Caches the menu for 4 hours (default). See configuration below.
  * 
  * Copyright (C) 2017 by Henry Kroll http://thenerdshow.com
  * By all means redistribute, and credit the above link and author!
@@ -30,26 +29,33 @@ class link {
    var $title;
    var $description;
 }
+
+// navbar not updating? remove sitemap.nav
 class navbar {
+   // rss feed configuration
+   private $title       = "RSS feed";
+   private $url         = "http://www.mywebsite.com";
+   private $description = "This is an example RSS feed";
+   private $copyright   = "Copyright (C) 2016 mywebsite.com";
+   private $language    = "en-us";
+   // change names to "" to disable these features
+   private $rss = "sitemap.rss";     // name of rss feed
+   private $nav = "sitemap.nav";     // name of cached navbar file
+   private $sitemap = "sitemap.xml"; // name of Google sitemap
+   
    // whether to list documents with missing "data-headings" attribute
    // if set to true FirstPage will list them under "other" menu heading
    // if set to false it won't list uncategorized documents at all!
    private $other = true;
+   public static $styles = true;       // show styles menu item
+   public static $rewriteMenu = true;  // stop page reloads RESTfully
+   public static $createLinks = true;  // link menu mentions in text
+   // also check .httaccess rewrite rules to customize which
+   // viewable root documents will display through FirstPage
+   // otherwise those pages will see no menu, search bar, etc.
+   private $filetypes = ['md', 'html', 'php', 'rss', 'xml']; // files to scan for
+   private $dlen = 99; // page description length limit
    
-   // whether to show styles menu item
-   public static $styles = true;
-   
-   // whether to rewrite menu to stop page reloads RESTfully
-   public static $rewriteMenu = true;
-   
-   // whether to automatically link menu titles within the text
-   public static $createLinks = true;
-   
-   // name of cached navbar file
-   // navbar not updating? remove navbar.inc
-   private $nav = "navbar.inc";
-   
-   private $filetypes = ['md', 'html', 'php'];
    private $headings = array();
    private $links = array();
    
@@ -95,7 +101,7 @@ class navbar {
          // update after a few hours or if cache is missing
          if ($update > $few * $hrs || ! file_exists($f.".cache")) {
             // ignore any errors
-            if ($c = file_get_contents($url)) {
+            if ($c = @file_get_contents($url)) {
                file_put_contents($f.".cache", $c);
             }
             touch($f); // touch myself
@@ -151,7 +157,7 @@ class navbar {
       $link = new link;
       $link->headings = $heads;
       $link->title = $title;
-      $link->description = $description;
+      $link->description = substr($description, 0, $this->dlen);
       $link->src = $remote? $remote : $f->getFileName();
       // push it onto links array
       array_push($this->links, $link);
@@ -177,26 +183,75 @@ class navbar {
    }
    
    public function update(){
-      // (re)build the menu
-      $f = fopen($this->nav, 'w+');
-      fwrite($f, "\n<nav><ul>\n");
-      fwrite($f, "   <li class='home'><a title=\"go home\" href=\"/\">".
-      "home</a></li>\n");
-      fwrite($f, "   <li class='rot'><a title=\"menu rotation\"".
-               " href=\"javascript:toggleNav();\"></a></li>\n");
-      foreach ($this->headings as $heading){
-         fwrite($f, "   <li><a href='javascript:void(0);' class='btn'>".
-                     "$heading</a>\n");
-         fwrite($f, "      <ul class='sub'>\n");
-         foreach ($this->links as $link){
-            // does it belong under this heading?
-            if (in_array($heading, $link->headings))
-            fwrite($f, "         <li><a class='btn' href=\"$link->src\"".
-                 " title=\"$link->description\">$link->title</a></li>\n");
+      // (re)build the menu?
+      if ($this->nav){
+         $f = fopen($this->nav, 'w+');
+         fwrite($f, "\n<nav><ul>\n");
+         fwrite($f, "   <li class='home'><a title=\"go home\" href=\"/\">".
+         "home</a></li>\n");
+         fwrite($f, "   <li class='rot'><a title=\"menu rotation\"".
+                  " href=\"javascript:toggleNav();\"></a></li>\n");
+         foreach ($this->headings as $heading){
+            fwrite($f, "   <li><a href='javascript:void(0);' class='btn'>".
+                        "$heading</a>\n");
+            fwrite($f, "      <ul class='sub'>\n");
+            foreach ($this->links as $link){
+               // does it belong under this heading?
+               if (in_array($heading, $link->headings))
+               fwrite($f, "         <li><a class='btn' href=\"$link->src\"".
+                    " title=\"$link->description\">$link->title</a></li>\n");
+            }
+            fwrite($f, "      </ul></li>\n");
          }
-         fwrite($f, "      </ul></li>\n");
-      } fwrite($f, "</ul></nav>\n\n");
-      fclose($f);
+         fwrite($f, "</ul></nav>\n\n");
+         fclose($f);
+      }
+      $url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+      $url .= $_SERVER['SERVER_NAME']."/";
+      // $url .= htmlspecialchars($_SERVER['REQUEST_URI']);
+      // create RSS feed?
+      if ($this->rss){
+         $rssfeed = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
+         ."<rss version=\"2.0\">\n"
+         ."<channel>\n"
+         ."<title>$this->title</title>\n"
+         ."<link>$this->url</link>\n"
+         ."<description>$this->description</description>\n"
+         ."<language>$this->language</language>\n"
+         ."<copyright>$this->copyright</copyright>\n";
+         foreach ($this->links as $link){
+            $rssfeed .= "<item>\n";
+            $rssfeed .= "<title>" . $link->title . "</title>\n";
+            $rssfeed .= "<description>" . $link->description . "</description>\n";
+            $rssfeed .= "<link>$url$link->src</link>\n";
+            // set date.timezone in php.ini, if possible
+            // but we'll go ahead and leave this here just in case
+            // date_default_timezone_set("US/Alaska");
+            $rssfeed .= "<pubDate>" . date("D, d M Y H:i:s O",
+               filemtime($link->src)) . "</pubDate>\n";
+            $rssfeed .= "</item>\n";
+         }
+         $rssfeed .= "</channel>\n";
+         $rssfeed .= "</rss>";
+         file_put_contents($this->rss, $rssfeed);
+      }
+      // create sitemap?
+      if ($this->sitemap){
+         $sitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+         ."<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+         foreach ($this->links as $link){
+            $sitemap .=
+             "<url>\n"
+            ."<loc>$url$link->src</loc>\n"
+            ."<lastmod>".date("Y-m-d", filemtime($link->src))
+            ."</lastmod>\n"
+            ."<changefreq>weekly</changefreq>\n"
+            ."<priority>0.5</priority>\n"
+            ."</url>\n";
+         }
+         $sitemap .= "</urlset>";
+         file_put_contents($this->sitemap, $sitemap);
+      }
    }
    
    private function needs_update($few = 1){
@@ -206,6 +261,21 @@ class navbar {
       $update = $now - filemtime($this->nav);
       // update after a few hours
       return ($update > $few * $hrs);
+   }
+   
+   public function search(){
+      if(isSet($_GET['_q'])) {
+         console_log($_GET['_q']);
+      }
+      if(isSet($_GET['_u'])) {
+         console_log($_SERVER['QUERY_STRING']);
+         echo "
+<script>
+   jEvent(window, \"load\", function(){
+      fetch(\"$_GET[_u]\");
+   });
+</script>";      
+      }
    }
    
    public function display(){
@@ -218,8 +288,11 @@ class navbar {
          $this->sort();
          $this->update();
       }
+      if($_GET){
+         $this->search();
+      }
       $this->display();
-   }}
+}  }
 ?>
 <script>
 function toggleNav(){
@@ -268,26 +341,29 @@ function toggleNav(){
       }         
    }
 }
-
-function createLinks(docContent){
-   // dynamic links
-   var btns = jqa("nav .sub a")
-   forAll(btns, function(e){
-      var lnk = "javascript:fetch('"+e.href+"')";
-      // console.log(e.innerText);
-      var repl = new RegExp(
-         "([^0-9A-Za-z])"+e.innerText+"([^0-9A-Za-z])", "g");
-      docContent.innerHTML = docContent.innerHTML.replace(
-         repl, "$1<a href=\""+lnk+"\">"+e.innerText+"</a>$2");
-   });
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 // rewrite navbar http links to use XHR displayIt
 (function(){
    "use strict";
-   // rewrite page links to use this
+   // rewrite page links
    window.fetch = function(u){
-      XHR(u, displayIt);
+      XHR(u + "?_firstpage", displayIt);
    };
+<?php if (navbar::$createLinks) { ?>   
+   function createLinks(docContent){
+      // link all words in .content text that match menu buttons
+      var btns = jqa("nav .sub a")
+      forAll(btns, function(e){
+         var lnk = "javascript:fetch('"+e.href+"')";
+         var repl = new RegExp(
+            "([^0-9A-Za-z])"+e.innerText+"([^0-9A-Za-z])", "g");
+         docContent.innerHTML = docContent.innerHTML.replace(
+            repl, "$1<a class=\"link\" href=\""+lnk+"\">"+e.innerText+"</a>$2");
+      });
+   }
+<?php } ?>
    function displayIt(e){
       function getKeywords(e){
          var obj = {}; var out=[], ret=[];
@@ -327,18 +403,25 @@ function createLinks(docContent){
       if (isDesc && isSet(isDesc[0]))
          jq("meta[name=\"description\"]").content = 
          jq("meta[property=\"og:description\"]").content = isDesc[0];
-      var tmpDiv = document.createElement("div");
+      window.tmpDiv = document.createElement("div");
       if (tmpDiv) {
          // put markdown into temporary div
-         if (e.responseURL.substr(-2) == "md"
-         || e.responseURL.substr(-8) == "md.cache") {
+         if (e.responseURL.match("\.md(.cache)?\\?_firstpage$")) {
             // strip off markdown headers
             tmpDiv.innerHTML = marked(e.responseText.replace(/([\w\-]+:.+\n)*/, ""));
-         } else tmpDiv.innerHTML = e.responseText;
-         // copy content or HTML to content
+         } else {
+            if (!e.responseURL.match("\.(html|php.?)(.cache)?\\?_firstpage$"))
+               tmpDiv.innerHTML = "<code><pre>"
+               +htmlEntities(e.responseText)+"</pre></code>";
+            else 
+               tmpDiv.innerHTML = e.responseText;
+          }
+         // copy content to content
          var docContent = jq(".content"); var eleContent = tmpDiv.jq(".content");
          if (docContent && eleContent) docContent.innerHTML = eleContent.innerHTML;
-         else docContent.innerHTML = tmpDiv.innerHTML;
+         else {
+            docContent.innerHTML = tmpDiv.innerHTML;
+         }
          createLinks(docContent);
          // count content keywords
          var words = docContent.innerText.replace(/\W+/g, " ").trim().split(" ");
