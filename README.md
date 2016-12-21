@@ -2,11 +2,11 @@ headings:      docs
 cache:         https://raw.githubusercontent.com/themanyone/firstpage/master/README.md
 expires:       24
 title:         README
-description:   SEO, content management, and blogging using conventional files.
+description:   A PHP Menu generator and content manager for files.
 
 # FirstPage
 
-SEO, content management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!
+A PHP Menu generator and content manager for files. Drop files onto the server and FirstPage takes care of the rest!
 
 Brought to you by [The Nerd Show](//thenerdshow.com/)
 
@@ -17,7 +17,7 @@ Brought to you by [The Nerd Show](//thenerdshow.com/)
 * Updates [sitemaps](https://www.sitemaps.org/index.html) and [RSS feeds](https://www.mnot.net/rss/tutorial/) as content changes
 * Use [GitHub as a blogging platform](#use-github-as-a-blogging-platform)
 * [Unlimited styles and layouts](#adding-new-styles)
-* Support [responsive web design](#supports-responsive-web-design)
+* Encourages [responsive web design](#supports-responsive-web-design)
 * Rewrites links [so they don't reload the page](#fewer-page-reloads)
 * Automatic [keyword generation](#automatic-keyword-generation)
 * Works without a database
@@ -28,7 +28,7 @@ This project is now **[available on GitHub](//github.com/themanyone/firstpage)**
 
 ## Site Updates Itself
 
-**FirstPage** updates menus, .rss feeds, and sitemaps hourly (at most) to match server contents, but only if the site is being accessed. Build a website by uploading files. A `<head data-headings=` header tells FristPage what category headings to list documents under. **This is probably the only header you need to use.**
+**FirstPage** updates menus, .rss feeds, and sitemaps hourly (adjustable) to match server contents, but only if the site is accessed. Build a website by uploading files. A `<head data-headings=` header tells FristPage what category headings to list documents under. **This is probably the only header you need to add.**
 
 ## Optional Headers
 
@@ -43,13 +43,13 @@ data-url="http://foo.com/file" | Get from foo.com (no cache).
 
 ## Adding Custom Menu Items
 
-The menu updates itself, but sometimes it is desirable to add a local file that isn't being noticed by the menu (recognized file types are configurable in navbar.phpx), or add a remote url to the menu, sitemap, and rss feeds. There are several ways to do this.
+The menu updates itself, but sometimes it is desirable to add a local file that isn't being noticed by the menu (recognized file types are configurable in navbar.phpx) or add a remote URL to the menu, sitemap, and RSS feeds. There are several ways to do this.
 
-* Cache the remote content. This requires creating a *HTML shortcut*, basically an HTML file containing the necessary `<head data-cache` and optional `data-expires` headers. 
+* Cache the remote content. This requires creating a *HTML shortcut*, an HTML file containing the necessary `<head data-cache` and optional `data-expires` headers. 
 
-* Link the remote content. Create a *HTML shortcut* with the appropriate `<head data-url="..."` header like we did with license.md. The license.md shortcut is necessary to make the link to LICENSE appear in the menu because LICENSE is not one of the file types FirstPage scans for. FirstPage adds the shortcut's, title, description, and URL to the menu.
+* Link the remote content. Create a *HTML shortcut* with the appropriate `<head data-url="..."` header like we did with license.md. The license.md shortcut is necessary to make the link to LICENSE appear in the menu because LICENSE is not one of the file types FirstPage examines. FirstPage adds the shortcut's, title, description, and URL to the navigation bar.
 
-* Hoard (mirror) the remote content. Copy the remote content to the server and keep it there. This may have to be manually updated from time to time, but it's a nearly foolproof way of backing things up.
+* Hoard (mirror) the remote content. Copy the remote content to the server and keep it there. Mirrors may have to be manually updated from time to time, but they are a nearly foolproof way of backing things up.
 
 ## HTML Shortcuts
 
@@ -65,7 +65,7 @@ data-headings="remote files, nerd stuff">
 
 ## Supports Markdown
 
-FirstPage finds and displays markdown (*.md) documents with [marked.js](//github.com/chjj/marked) using the popular [GitHub Markdown format](//guides.github.com/features/mastering-markdown), allowing people to make web pages easily using an intuitive, wiki-like syntax. Markdown headers are a lot like HTML headers. Put these optional headers at the top of markdown files so FirstPage can better index them.
+FirstPage finds and displays markdown (*.md) documents with [marked.js](//github.com/chjj/marked) using the simple [GitHub Markdown format](//guides.github.com/features/mastering-markdown), allowing people to make web pages quickly using an intuitive, wiki-like syntax. Markdown headers are a lot like HTML headers. Put these optional headers at the top of markdown files, so FirstPage can better index them.
 
 header     | what it does
 -----------|-------------
@@ -83,14 +83,14 @@ To add a remote file link to the menu, sitemap, and rss feeds, create a placehol
 ```
 headings : docs, help
 title : The Nerd Show
-description : Nerd stuff...
+description : Nerd stuff
 url : https://thenerdshow.com
 ```
-The above shortcut instruct FirstPage to put a link to The Nerd Show in the menu under "docs" and "help". The order of the elements is not critical. Try it! There are no real restrictions on what can go in a shortcut. This README is actually a cache shortcut that FirstPage uses to cache a more up-to-date copy of itself in the menu under "docs".
+The above shortcut instruct FirstPage to put a link to The Nerd Show in the menu under "docs" and "help." The order of the elements is not critical. Try it! There are no real restrictions on what can go in a shortcut. This README is actually a cache shortcut that FirstPage uses to cache a more up-to-date copy of itself in the menu under "docs".
 
 ## Use GitHub as a Blogging Platform
 
-We can upload markdown to GitHub and drop shortcuts on the web server. The server will track updates as they change on GitHub. **Cached files** with cache: header will persist even if the remote files are deleted! If you do not want to keep cached copies around, use the url : shortcut instead. **URL shortcuts** are never cached.
+We can upload markdown to GitHub and drop shortcuts on the web server. The server will track updates as they change on GitHub. **Cached files** with cache: header will persist even if the remote files disappear! If you do not want to keep cached copies around, use the url : shortcut instead. **URL shortcuts** are never cached.
 
 ## Automatic Keyword Generation
 
@@ -106,7 +106,7 @@ If there are no meta tags in the document, FirstPage will attempt to create them
 
 ## Generates RSS Feeds and Sitemaps
 
-In addition to generating the menu, FirstPage now generates sitemap.xml and an RSS Feed. 
+In addition to making the menu, FirstPage now generates sitemap.xml and an RSS Feed. 
 
 ## Supports Responsive Web Design
 
@@ -114,11 +114,11 @@ The sky is the limit! Since FirstPage leaves existing content alone and merely b
 
 ## Dynamic Menu Links
 
-The double-underlined links in the document are menu links. If menu items like LICENSE appear in the body of the document, FirstPage will turn them into links!
+The double-underlined links in the document are menu links. If menu items like LICENSE appear in the text, FirstPage will turn them into links!
 
 ## Fewer Page Reloads
 
-When Javascript is available FirstPage uses AJAX XMLHTTPRequest to create a RESTful user experience. This saves bandwidth and avoids tiresome page reloads that leave competitor's sites *blank* in the event of bad links or internet congestion. Click on any menu items, or double-underlined links and watch. The page does not reload!
+When Javascript is available FirstPage uses AJAX XMLHTTPRequest to create a RESTful user experience. These background requests save bandwidth and avoid tiresome page reloads that leave competitor's sites *blank* in the event of bad links or internet congestion. Click on any menu items, or double-underlined links and watch. The page does not reload!
 
 An arrow ![Arrow](images/externallink.png) pops up next to external links that require a page reload.
 
@@ -135,7 +135,7 @@ An arrow ![Arrow](images/externallink.png) pops up next to external links that r
 You may test this project
 
 * by running `php -S addr:port&`
-* by coping it to a php web server.
+* by copying it to a PHP web server.
 * or with [many other test servers](http://unix.stackexchange.com/questions/32182/simple-command-line-http-server).
 
 ## Troubleshooting
@@ -150,12 +150,12 @@ If the menu or cached items are not updating, check folder permissions, review t
 
 1. Delete all the sitemap files. `rm sitemap.*`
 2. Refresh the page (Press `F5` in the browser) to rebuild them.
-3. Delete sitemap.nav to rebuild the menu *again*.
+3. Delete sitemap.nav to reconstruct the menu *again*.
 4. It should pick up all the latest files now.
 
 ### Rebuild cached files
 
-It may be desirable to rebuild some cached files to push changes out immediately before that ad campaign runs, etc.
+It may be desirable to recreate some cached files to make sure they are up to date before that ad campaign runs, etc.
 
 1. Delete the .cache file(s) that need rebuilt. `rm myShortcut.md.cache`
 2. Touch the shortcut with an earlier date. `touch -t 01010000 myShortcut.md`
@@ -163,7 +163,7 @@ It may be desirable to rebuild some cached files to push changes out immediately
 
 ## Adding New Styles
 
-Add alternate stylesheet tags to FirstPage's `index.html` and these alternate styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.phpx`.
+Add "alternate stylesheet" tags to FirstPage's `index.html` and these styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.phpx`.
 
 Create the .css file and add a link to it like this:
 ```
@@ -171,4 +171,4 @@ Create the .css file and add a link to it like this:
 title="myStyle" type="text/css" href="css/myStyle.css?v=1.0">
 ```
 
-The `v=1.0` version number forces an update. Google Chrome is refusing to update .css files. Firefox has trouble updating .css files, too. Change the version number and it will upate.
+The `v=1.0` version number forces an update. Google Chrome is refusing to update .css files. Firefox has trouble updating .css files, too. Change the version number, and it will update.

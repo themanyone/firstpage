@@ -3,8 +3,8 @@
 <title>FirstPage</title>
 <meta property="og:title" content="FirstPage" />
 <meta name="copyright" content="© 2017 Henry Kroll www.thenerdshow.com" />
-<meta name="description" content="SEO, content management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!" />
-<meta property="og:description" content="A PHP Menu generator and content management system (CMS)" />
+<meta name="description" content="A PHP Menu generator and content manager for files." />
+<meta property="og:description" content="A PHP Menu generator and content manager for files." />
 <meta property="og:description" content="65,535 little turkeys be enjoyin' this." />
 <meta name="keywords" content="menu from permalink headings expires documents copy them labels label hours Fetch Data what using update under that permalinked management links head contents cache after">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -68,13 +68,13 @@ $navbar = new navbar;
       </p>
      
       <ul>
-         <li>Supports <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
          <li>Menus stay updated</li>
+         <li>Supports <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
          <li>Caching of remote pages</li>
          <li>Unlimited styles and layouts</li>
          <li>Automatic keyword generation</li>
          <li>Supports responsive web design</li>
-         <li>Publishes an <a href="https://www.mnot.net/rss/tutorial/">RSS feed</a> of site contents</li>
+         <li>Publishes an <a href="https://www.mnot.net/rss/tutorial/">RSS feed</a> of menu contents</li>
          <li>Builds <a href="https://www.sitemaps.org/index.html">sitemaps</a> for crawlers to chew on</li>
          <li>Deploys and backs up easily</li>
          <li>No database required or used</li>

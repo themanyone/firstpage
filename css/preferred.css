@@ -48,12 +48,6 @@ table tr:nth-child(even){
    -moz-transition: all 1s ease-in-out; /** Firefox **/
    -o-transition: all 1s ease-in-out; /** Opera **/
 }
-content h1 {
-   width: 100%;
-}
-.v {
-   margin-left:185px;
-}
 .shadow {
         box-shadow: 3px 3px 5px 5px #404040;
 }

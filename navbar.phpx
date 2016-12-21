@@ -1,24 +1,24 @@
 <?php
 /*
  * navbar.phpx
- * 
+ *
  * Builds drop-down CSS3 menus by scanning files in server directories.
- * 
+ *
  * Copyright (C) 2017 by Henry Kroll http://thenerdshow.com
  * By all means redistribute, and credit the above link and author!
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 function console_log( $data ){
   echo '<script>console.log('.json_encode( $data ).');</script>';
@@ -42,7 +42,7 @@ class navbar {
    private $rss = "sitemap.rss";     // name of rss feed
    private $nav = "sitemap.nav";     // name of cached navbar file
    private $sitemap = "sitemap.xml"; // name of Google sitemap
-   
+
    // whether to list documents with missing "data-headings" attribute
    // if set to true FirstPage will list them under "other" menu heading
    // if set to false it won't list uncategorized documents at all!
@@ -55,10 +55,10 @@ class navbar {
    // otherwise those pages will see no menu, search bar, etc.
    private $filetypes = ['md', 'html', 'php', 'rss', 'xml']; // files to scan for
    private $dlen = 255; // page description length limit
-   
+
    private $headings = array();
    private $links = array();
-   
+
    private function tsearch($contents, $patterns, $top = 10){
       // Search top of contents string for array of patterns
       $lines = split("\n", $contents, $top);
@@ -72,21 +72,21 @@ class navbar {
          }
       } return "";
    }
-   
+
    private function cache($f, $c){
       // FirstPage can maintain a cached copy of documents.
       // Cached copies will have '.cache' appended to the end.
-      
+
       // header for .md files:         cache: http://...
       // header for .html files: <head data-cache="http://...
-      
+
       // cached files update by default every 4 hours
       // to change this use expires: header
-      
+
       // expire cached copy after 24 hours
       // expires header for .md files:              expires: 24
       // expires header for .html files: <head data-expires= 24
-      
+
       $hrs = 3600; $now = time();
       if (substr($f, -2) == "md") {
          $url = $this->tsearch($c, ['/^cache\s*:\s*(.*)/']);
@@ -109,12 +109,12 @@ class navbar {
          return $f.".cache";
       } else return "";
    }
-   
+
    private function fetchRemote($f, $c){
       // Always fetch (do not cache) a remote file
-      
+
       // Put data-url header in local file
-      
+
       // header for .md files:         url: http://...
       // header for .html files: <head data-url="http://...
       if (substr($f, -2) == "md")
@@ -123,7 +123,7 @@ class navbar {
          $url_str = $this->tsearch($c, ['/data-url\s*=\s*"([^"]+)"/']);
       return $url_str? $url_str : "";
    }
-   
+
    private function getLinks($f){
       // get suggested menu headings, title, and description
       $c = file_get_contents($f);
@@ -146,7 +146,7 @@ class navbar {
       $title = $this->tsearch($c, ['/^title:\W*(.{3,23})\W*/', '/^#+\s*(.{3,23})/',
                      '/\s*<title>\W*(.{3,23})\W*<\/title>/',
                      '/<h.>\s*(.{3,23})\s*<\/h.>/', '/^\W*([\w\s]{10,23})$/']);
-      $description =  $this->tsearch($c, ['/^description:\s*(.*)/', 
+      $description =  $this->tsearch($c, ['/^description:\s*(.*)/',
                '/name[ ="\']*description.*content[ ="\']+([^"\']*)/',
                '/<p>\s*(.*)\s*<\/p>/', '/^([^#:><]{25}.*)/']);
       if (!$description) $description = "No Description";
@@ -162,7 +162,7 @@ class navbar {
       // push it onto links array
       array_push($this->links, $link);
    }
-   
+
    private function scan(){
       // scan the folder for documents
       foreach (new DirectoryIterator(".") as $f) { // iterator
@@ -171,7 +171,7 @@ class navbar {
             if ($f->isFile()) {
                $this->getLinks($f);
    }  }  }  }
-   
+
    private function sort(){
       $this->headings=array_unique($this->headings);
       sort($this->headings);
@@ -181,7 +181,7 @@ class navbar {
          array_push($this->headings, "other");
       }
    }
-   
+
    public function update(){
       // (re)build the menu?
       if ($this->nav){
@@ -254,7 +254,7 @@ class navbar {
          file_put_contents($this->sitemap, $sitemap);
       }
    }
-   
+
    private function needs_update($few = 1){
       // doesn't exist? needs update
       if (!file_exists($this->nav)) return 1;
@@ -263,7 +263,7 @@ class navbar {
       // update after a few hours
       return ($update > $few * $hrs);
    }
-   
+
    public function search(){
       if(isSet($_GET['_q'])) {
          console_log($_GET['_q']);
@@ -274,14 +274,14 @@ class navbar {
    jEvent(window, \"load\", function(){
       fetch(\"$_GET[_u]\");
    });
-</script>";      
+</script>";
       }
    }
-   
+
    public function display(){
       echo file_get_contents($this->nav);
    }
-   
+
    function __construct(){
       if ($this->needs_update()){
          $this->scan();
@@ -338,13 +338,15 @@ function toggleNav(){
             e.style.top=pe.top+"px";
             e.style.left=pe.right+"px";
          });
-      }         
+      }
    }
 }
+
 function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
+
 // rewrite navbar http links to use XHR displayIt
 (function(){
    "use strict";
@@ -352,7 +354,9 @@ function htmlEntities(str) {
    window.fetch = function(u){
       XHR(u + "?_firstpage", displayIt);
    };
+
 <?php if (navbar::$createLinks) { ?>
+
    function replaceInNodes(nodes, regExp, flags, lnk){
       var reg = new RegExp(regExp, flags);
       forAll(jqa(nodes), function (e) {
@@ -379,20 +383,17 @@ function htmlEntities(str) {
          });
       });
    }
-   
+
    function createLinks(docContent){
       // link all words in .content text that match menu buttons
       forAll(jqa("nav .sub a"), function(e){
-         // var lnk = "javascript:fetch('"+e.href+"')";
-         // var repl = new RegExp(
-            // "("+e.innerText+")", "gi");
-         // var txt = e.innerHTML;
          var et = e.href.substr(0, 10) == "javascript"
             ? e.href : "javascript:fetch('"+e.href+"')";
          replaceInNodes("p, pre, code, h, b", "("+e.innerText+")",
           "gi", et);
       });
    }
+
 <?php } ?>
    function displayIt(e){
       function getKeywords(e){
@@ -406,6 +407,7 @@ function htmlEntities(str) {
          out.forAll(function(e){ret.push(e[1]);});
          return ret.join(" ");
       }
+
       function tsearch(contents, patterns, top = 10){
          // Search top of contents string for array of patterns
          var lines = contents.split("\n", top);
@@ -420,18 +422,19 @@ function htmlEntities(str) {
          });
          return found;
       }
+
       // get title and description
       var c = e.responseText;
       var isTitle = tsearch(c, [/^title:\W*(.{3,23})\W*/, /#+\s*(.{3,23})/,
                      /\s*<title>\W*(.{3,23})\W*<\/title>/,
                      /<h.>\s*(.{3,23})\s*<\/h.>/, /\W*([\w\s]{10,23})/]);
-      var isDesc = tsearch(c, [/^description:\s*(.*)/, 
+      var isDesc = tsearch(c, [/^description:\s*(.*)/,
                /name[ ="\']*description.*content[ ="\']+([^"\']*)/,
                /<p>\s*(.*)\s*<\/p>/, /^([^#:><]{25}.*)/]);
       if (isTitle && isSet(isTitle[0])) document.title
          = jq("meta[property=\"og:title\"]").content = isTitle[0];
       if (isDesc && isSet(isDesc[0]))
-         jq("meta[name=\"description\"]").content = 
+         jq("meta[name=\"description\"]").content =
          jq("meta[property=\"og:description\"]").content = isDesc[0];
       window.tmpDiv = document.createElement("div");
       if (tmpDiv) {
@@ -443,7 +446,7 @@ function htmlEntities(str) {
             if (!e.responseURL.match("\.(html|php.?)(.cache)?\\?_firstpage$"))
                tmpDiv.innerHTML = "<code><pre>"
                +htmlEntities(e.responseText)+"</pre></code>";
-            else 
+            else
                tmpDiv.innerHTML = e.responseText;
           }
          // copy content to content
@@ -458,7 +461,8 @@ function htmlEntities(str) {
          jq("meta[name=\"keywords\"]").content = getKeywords(words);
       }
    }
- <?php if (navbar::$rewriteMenu) { ?>  
+
+ <?php if (navbar::$rewriteMenu) { ?>
    // rewrite menu for RESTful click without page load
    jEvent(window, "load", function(){
       forAll(jqa("nav .sub a"), function(e){
@@ -469,9 +473,11 @@ function htmlEntities(str) {
             }
          }, false);
       });
- <?php } if (navbar::$createLinks) { ?>   
+ <?php } if (navbar::$createLinks) { ?>
+
       createLinks(jq(".content"));
- <?php } if (navbar::$styles) { ?>     
+ <?php } if (navbar::$styles) { ?>
+
       // put alternate styles on menu
       var sl = jq("nav > ul > li:last-child");
       var styles = jqa("link[rel=\"alternate stylesheet\"]");
@@ -486,6 +492,7 @@ function htmlEntities(str) {
       + 'class="btn">styles</a><ul class="sub">' + h + '</ul></li>');
 <?php } ?>
    }, false);
+
    marked.setOptions({
      renderer: new marked.Renderer(),
      gfm: true,
@@ -496,5 +503,6 @@ function htmlEntities(str) {
      smartLists: true,
      smartypants: true
    });
+
 })();
 </script>

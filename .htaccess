@@ -87,6 +87,10 @@ DirectoryIndex index.php
 
 </IfModule>
 
+############################
+# Error Document
+
+ErrorDocument 404 /404.htm
 
 ############################
 # REWRITE RULES
@@ -106,7 +110,7 @@ RewriteEngine on
 # If you're not running FirstPage in a subdirectory on your site, but still getting lots
 # of 404 errors beyond the front page, you could instead try:
 #
-RewriteBase /
+RewriteBase /firstpage/
 
 
 # If your users receive the message "Sorry, logging in from a different domain is not permitted"
@@ -131,8 +135,8 @@ RewriteCond %{REQUEST_URI} \/([^.]+\.)?(md|php|html|.*.cache|LICENSE)$
 RewriteRule . http://test.k/?_u=%1%2 [QSA,L]
 
 # everything else that isn't a folder gets routed through FirstPage
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /?_u=$1 [QSD,L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /?_u=$1 [QSD,L]
 
 </IfModule>
