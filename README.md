@@ -28,20 +28,22 @@ This project is now **[available on GitHub](//github.com/themanyone/firstpage)**
 
 ## Site Updates Itself
 
-**FirstPage** updates menus, .rss feeds, and sitemaps hourly (at most) to match server contents, but only if the site is being accessed. Build a website by uploading files. A <head data-headings=` header tells FristPage what category headings to list documents under. This is probably the only header you need to use. Files without these headings go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
+**FirstPage** updates menus, .rss feeds, and sitemaps hourly (at most) to match server contents, but only if the site is being accessed. Build a website by uploading files. A `<head data-headings=` header tells FristPage what category headings to list documents under. **This is probably the only header you need to use.**
 
-# Additional Headers
+## Optional Headers
 
-header     | what it does
------------|-------------
-data-headings="foo, bar"       | List under foo and bar headings.
+&lt;head data- header     | what it does
+--------------------------|-------------
+data-headings="foo, bar"       | List under foo and bar headings.*
 data-cache="http://foo.com"    | Show cached copy of foo.com
 data-expires=4                 | Fetch new copy after 4 hours.
 data-url="http://foo.com/file" | Get from foo.com (no cache).
 
+\* Files without `data-headings` go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
+
 ## Adding Custom Menu Items
 
-The menu updates itself, but sometimes it's necessary to add a local file that isn't being noticed by the menu (recognized file types configurable in navbar.phpx), or add a remote url to the menu, sitemap, and rss feeds. There are several ways to do this.
+The menu updates itself, but sometimes it is desirable to add a local file that isn't being noticed by the menu (recognized file types are configurable in navbar.phpx), or add a remote url to the menu, sitemap, and rss feeds. There are several ways to do this.
 
 * Cache the remote content. This requires creating a *HTML shortcut*, basically an HTML file containing the necessary `<head data-cache` and optional `data-expires` headers. 
 
@@ -67,10 +69,12 @@ FirstPage finds and displays markdown (*.md) documents with [marked.js](//github
 
 header     | what it does
 -----------|-------------
-headings : foo, bar       | List under foo and bar headings.
+headings : foo, bar       | List under foo and bar headings.*
 cache : http://foo.com    | Display cached copy of foo.com
 expires : 4               | Fetch new copy after 4 hours.
 url : http://foo.com/file | Download from foo.com (no cache).
+
+\* Files without `headings:` go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
 
 ## Markdown Shortcuts
 
@@ -136,9 +140,13 @@ You may test this project
 
 ## Troubleshooting
 
+**Javascript** TypeError: Cannot read property 'insertAdjacentHTML' of null
+
+Edit the included .htaccess file with your site names and directories. Especially `RewriteBase /firstpage/` should be changed to `/` if FirstPage is to manage the server root.
+
 ### Rebuild sitemaps
 
-If the menu or cached items are not updating, check folder permissions, review the error logs, and rebuild the menus. Folder permissions should be 755. File permissions are 644 except for sitemap.* which are managed by PHP.
+If the menu or cached items are not updating, check folder permissions, review the error logs, and rebuild the menus. Folder permissions should be write and exec by PHP e.g. 775 or 755. File permissions are 644 except for sitemap.* which are managed by PHP.
 
 1. Delete all the sitemap files. `rm sitemap.*`
 2. Refresh the page (Press `F5` in the browser) to rebuild them.
@@ -157,9 +165,10 @@ It may be desirable to rebuild some cached files to push changes out immediately
 
 Add alternate stylesheet tags to FirstPage's `index.html` and these alternate styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.phpx`.
 
-Create the .css file and add it in there like this:
+Create the .css file and add a link to it like this:
 ```
-<link rel="alternate stylesheet" title="myStyle" type="text/css" href="css/myStyle.css?v=1.0">
+<link rel="alternate stylesheet"
+title="myStyle" type="text/css" href="css/myStyle.css?v=1.0">
 ```
 
-The version number is handy to force an update. Google Chrome is refusing to update .css files. Firefox has trouble updating .css files, too. Change the version number and it will upate.
+The `v=1.0` version number forces an update. Google Chrome is refusing to update .css files. Firefox has trouble updating .css files, too. Change the version number and it will upate.

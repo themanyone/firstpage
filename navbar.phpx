@@ -54,7 +54,7 @@ class navbar {
    // viewable root documents will display through FirstPage
    // otherwise those pages will see no menu, search bar, etc.
    private $filetypes = ['md', 'html', 'php', 'rss', 'xml']; // files to scan for
-   private $dlen = 99; // page description length limit
+   private $dlen = 255; // page description length limit
    
    private $headings = array();
    private $links = array();
@@ -238,7 +238,8 @@ class navbar {
       // create sitemap?
       if ($this->sitemap){
          $sitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-         ."<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+         ."<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
+         ."<title>sitemap</title>\n";
          foreach ($this->links as $link){
             $sitemap .=
              "<url>\n"
@@ -268,7 +269,6 @@ class navbar {
          console_log($_GET['_q']);
       }
       if(isSet($_GET['_u'])) {
-         console_log($_SERVER['QUERY_STRING']);
          echo "
 <script>
    jEvent(window, \"load\", function(){
@@ -342,7 +342,8 @@ function toggleNav(){
    }
 }
 function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 // rewrite navbar http links to use XHR displayIt
 (function(){
@@ -351,16 +352,45 @@ function htmlEntities(str) {
    window.fetch = function(u){
       XHR(u + "?_firstpage", displayIt);
    };
-<?php if (navbar::$createLinks) { ?>   
+<?php if (navbar::$createLinks) { ?>
+   function replaceInNodes(nodes, regExp, flags, lnk){
+      var reg = new RegExp(regExp, flags);
+      forAll(jqa(nodes), function (e) {
+         forAll(e.childNodes, function (f){
+            if (f.nodeType == 3) {
+               var s = f.nodeValue;
+               var m = reg.exec(s);
+               if (m) {
+                  var pn = f.parentNode;
+                  var p1 = s.substr(0, m.index);
+                  var p2 = m[0];
+                  var p3 = s.substr(p2.length + m.index);
+                  var t = document.createTextNode(p1);
+                  pn.replaceChild(t, f);
+                  var a = document.createElement("a");
+                  a.className = "link";
+                  a.href = lnk;
+                  a.innerHTML = p2;
+                  pn.insertBefore(a, t.nextSibling);
+                  t = document.createTextNode(p3);
+                  pn.insertBefore(t, a.nextSibling);
+               }
+            }
+         });
+      });
+   }
+   
    function createLinks(docContent){
       // link all words in .content text that match menu buttons
-      var btns = jqa("nav .sub a")
-      forAll(btns, function(e){
-         var lnk = "javascript:fetch('"+e.href+"')";
-         var repl = new RegExp(
-            "([^0-9A-Za-z])"+e.innerText+"([^0-9A-Za-z])", "g");
-         docContent.innerHTML = docContent.innerHTML.replace(
-            repl, "$1<a class=\"link\" href=\""+lnk+"\">"+e.innerText+"</a>$2");
+      forAll(jqa("nav .sub a"), function(e){
+         // var lnk = "javascript:fetch('"+e.href+"')";
+         // var repl = new RegExp(
+            // "("+e.innerText+")", "gi");
+         // var txt = e.innerHTML;
+         var et = e.href.substr(0, 10) == "javascript"
+            ? e.href : "javascript:fetch('"+e.href+"')";
+         replaceInNodes("p, pre, code, h, b", "("+e.innerText+")",
+          "gi", et);
       });
    }
 <?php } ?>
