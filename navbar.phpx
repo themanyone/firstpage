@@ -357,7 +357,7 @@ function htmlEntities(str) {
 
 <?php if (navbar::$createLinks) { ?>
 
-   function replaceInNodes(nodes, regExp, flags, lnk){
+   function replaceInNodes(nodes, regExp, flags, lnk, desc){
       var reg = new RegExp(regExp, flags);
       forAll(jqa(nodes), function (e) {
          forAll(e.childNodes, function (f){
@@ -374,6 +374,7 @@ function htmlEntities(str) {
                   var a = document.createElement("a");
                   a.className = "link";
                   a.href = lnk;
+                  a.title= desc;
                   a.innerHTML = p2;
                   pn.insertBefore(a, t.nextSibling);
                   t = document.createTextNode(p3);
@@ -390,7 +391,7 @@ function htmlEntities(str) {
          var et = e.href.substr(0, 10) == "javascript"
             ? e.href : "javascript:fetch('"+e.href+"')";
          replaceInNodes("p, pre, code, h, b", "("+e.innerText+")",
-          "gi", et);
+          "gi", et, e.title);
       });
    }
 
@@ -443,7 +444,7 @@ function htmlEntities(str) {
             // strip off markdown headers
             tmpDiv.innerHTML = marked(e.responseText.replace(/([\w\-]+:.+\n)*/, ""));
          } else {
-            if (!e.responseURL.match("\.(html|php.?)(.cache)?\\?_firstpage$"))
+            if (!e.responseURL.match("\.(html|php.?)"))
                tmpDiv.innerHTML = "<code><pre>"
                +htmlEntities(e.responseText)+"</pre></code>";
             else
