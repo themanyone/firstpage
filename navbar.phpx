@@ -492,7 +492,18 @@ function htmlEntities(str) {
       + 'class="btn">styles</a><ul class="sub">' + h + '</ul></li>');
 <?php } ?>
    }, false);
-
+   
+   function displaySearch(s){
+      jq(".content").innerHTML += s;
+   }
+   window.submitForm = function submitForm(oFormElement){
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function(){ displayIt (xhr); }
+      xhr.open (oFormElement.method, oFormElement.action, true);
+      xhr.send (new FormData (oFormElement));
+      return false;
+   }
+   
    marked.setOptions({
      renderer: new marked.Renderer(),
      gfm: true,
@@ -505,4 +516,5 @@ function htmlEntities(str) {
    });
 
 })();
+
 </script>

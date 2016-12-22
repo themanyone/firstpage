@@ -1,4 +1,5 @@
 @import url("navbar.css?v=1.2");
+@import url("search.css?v=1.2");
 html { height:100%; }
 body, thead {
    font-family: sans-serif;
@@ -8,45 +9,30 @@ body, thead {
    background: linear-gradient(to bottom, #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
 }
-
 table {
    border: 1px solid #1e5799;
    border-collapse: collapse;
    width: 90%;
    margin: auto;
 }
-
 table thead {
    text-align: center;
    font-style: italic;
    font-weight: bold;
    color: white;
 }
-
 table td {
-border-left: 1px  solid #1e5799;
-border-right: 1px solid #1e5799;
+   border-left: 1px  solid #1e5799;
+   border-right: 1px solid #1e5799;
 }
-
 table td:first-child {
-border-left: none;
+   eft: none;
 }
-
 table td:last-child {
-border-right: none;
+   -right: none;
 }
-
 table tr:nth-child(even){
    background-color: #CEE7F0;
-}
-.content {
-   background-color: #FFFFFF;
-   padding: 0 5px 0 5px;
-   float:left;
-   transition: all 1s ease-in-out;
-   -webkit-transition: all 1s ease-in-out; /** Chrome & Safari **/
-   -moz-transition: all 1s ease-in-out; /** Firefox **/
-   -o-transition: all 1s ease-in-out; /** Opera **/
 }
 .shadow {
         box-shadow: 3px 3px 5px 5px #404040;
@@ -54,16 +40,29 @@ table tr:nth-child(even){
 .right {
    float:right;
 }
+.center {
+   position: absolute;
+   left: 50%;
+}
+#socIcons {
+   position: relative;
+   left: -50%;
+}
 .rounded {
    border-radius: 8px;
 }
 a,h1,h2,h3,h4,b,strong {
-        color: #222C51;
+   color: #222C51;
+   margin-top: 0;
 }
 a {
    text-decoration: none;
 }
-code,pre {
+a.link {
+    text-decoration:underline;
+    border-bottom: 1px solid;
+}
+code, pre {
    background-color: rgba(255,255,255,0.8);
    white-space: pre-wrap;       /* Since CSS 2.1 */
    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
@@ -71,14 +70,19 @@ code,pre {
    white-space: -o-pre-wrap;    /* Opera 7 */
    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
+.content {
+   background-color: #FFFFFF;
+   padding: 0 5px 0 5px;
+   float: left;
+   transition: all 1s ease-in-out;
+   -webkit-transition: all 1s ease-in-out; /** Chrome & Safari **/
+   -moz-transition: all 1s ease-in-out; /** Firefox **/
+   -o-transition: all 1s ease-in-out; /** Opera **/
+}
 /* pop-out external link indicator */
 .content a:hover:not([href^="javas"]):not([href^="#"]) {
     background: url('../images/externallink.png') center right no-repeat;
     padding-right: 13px;
-}
-a.link {
-    text-decoration:underline;
-    border-bottom: 1px solid;
 }
 /* responsive web design features */
 
@@ -96,7 +100,6 @@ a.link {
       padding: 0;
    }
 }
-
 /* use two column layout if screen grows past 900px */
 @media only screen and (min-width: 900px) {
    .content {

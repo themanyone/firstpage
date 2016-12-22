@@ -34,24 +34,29 @@ limitations under the License.
 <script src="js/include.js"></script>
 <script src="js/marked.min.js"></script>
 <script src="js/styleswitcher.js"></script>
+
 </head>
 <body>
-      
+
 <div style="margin:auto;width:99%">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- Responsive -->
 <ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6719667455972380"
-     data-ad-slot="4356826116"
-     data-ad-format="auto"></ins>
+style="display:block"
+data-ad-client="ca-pub-6719667455972380"
+data-ad-slot="4356826116"
+data-ad-format="auto"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 </div>
 
-<div class="right"><script src="http://thenerdshow.com/social/mediaIcons.js?button0=&amp;button1=&amp;button2=&amp;button3=&amp;button4=&amp;button5=&amp;button12=&amp;button13=&amp;url13=//youtube.com/themanyone"></script>
-</div>
+<form method="post" action="search.phpx" onsubmit="return submitForm(this);">
+<div id="search">
+<input name="_q" type="search" placeholder="search" required>
+<input type="submit" value=" ">
+</div></form>
+
 
 <?php
 function __autoload($class_name) {

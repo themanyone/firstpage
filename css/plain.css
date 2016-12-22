@@ -4,14 +4,20 @@ border-collapse: collapse;
 width: 90%;
 margin: auto;
 }
-
+.center {
+   position: absolute;
+   left: 50%;
+}
+#socIcons {
+   position: relative;
+   left: -50%;
+}
 .content {
    display:block;
    background-color: #FFFFFF;
       padding: 0 5px 0 5px;
    float:left;
 }
-
 code,pre {
    background-color: rgba(255,255,255,0.8);
    white-space: pre-wrap;       /* Since CSS 2.1 */
@@ -20,7 +26,6 @@ code,pre {
    white-space: -o-pre-wrap;    /* Opera 7 */
    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
-
 /* responsive web design features */
 
 /* use available screen area if display shrinks below 600px */

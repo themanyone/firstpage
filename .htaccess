@@ -14,6 +14,7 @@ Options +FollowSymLinks
 # Default handler
 DirectoryIndex index.php
 
+AddType application/x-httpd-php .phpx
 
 ############################
 # BROWSER CACHING

@@ -34,6 +34,14 @@ nav > ul > li > .btn:hover:before {
    -ms-transform:      rotate(60deg);
    transform:          rotate(60deg);
 }
+.center {
+   position: absolute;
+   left: 50%;
+}
+#socIcons {
+   position: relative;
+   left: -50%;
+}
 body {
    background-image:url('xmas/christmas-background-with-gifts-and-baubles_1048-3438.jpg');
    background-repeat: no-repeat;
