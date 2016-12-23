@@ -24,6 +24,7 @@
 class search {
    private $s;
    private $filetypes = ['md', 'html', '']; // files to search
+   private $limit = 99; // limit to 99 results
    
    private function sanitize($s){
       return substr($s, 0, 35);
@@ -41,6 +42,7 @@ class search {
             .substr($str, $ofs, strlen($this->s))."</b>"
             .substr($str, $ofs+ strlen($this->s));
             echo $s."</p>\n\n";
+            $this->limit--;
             break;
          }
       }
@@ -50,7 +52,11 @@ class search {
    // scan the folder for documents
       foreach (new DirectoryIterator(".") as $f) { // iterator
          if (in_array($f->getExtension(), $this->filetypes) ) { // in $this->filetypes
-            // do something here
+            // limit results
+            if (!$this->limit) {
+               echo "<p class=search>Search returned > 99 results! Try refining search terms.</p>";
+               break;
+            }
             if ($f->isFile()) {
                $this->search($f);
    }  }  }  }

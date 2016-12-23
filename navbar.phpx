@@ -32,7 +32,7 @@ class link {
 
 // navbar not updating? remove sitemap.nav
 class navbar {
-   // rss feed configuration
+   // sitemap & rss feed configuration
    private $title       = "RSS feed";
    private $url         = "http://www.mywebsite.com";
    private $description = "This is an example RSS feed";
@@ -328,7 +328,7 @@ function toggleNav(){
          cs.position = "absolute";
          cs.top = content.getBoundingClientRect().top+"px";
          cs.left = content.getBoundingClientRect().left+"px";
-         cs.top = nav.getBoundingClientRect().top+"px";
+         cs.top = content.getBoundingClientRect().top+"px";
          cs.left = w+15+"px";
          // shrink menu width to button width w
          ns.width = w+"px";
@@ -440,26 +440,36 @@ function htmlEntities(str) {
       window.tmpDiv = document.createElement("div");
       if (tmpDiv) {
          // put markdown into temporary div
+         // if coming from internal markdown request (link click)
          if (e.responseURL.match("\.md(.cache)?\\?_firstpage$")) {
-            // strip off markdown headers
-            tmpDiv.innerHTML = marked(e.responseText.replace(/([\w\-]+:.+\n)*/, ""));
-         } else {
-            if (!e.responseURL.match("\.(html|php.?)"))
+            // strip off markdown headers and mark it up to HTML
+            tmpDiv.innerHTML = marked(e.responseText
+               .replace(/([\w\-]+:.+\n)*/, ""));
+            console.log(tmpDiv);
+            // otherwise it could be HTML
+         } else tmpDiv.innerHTML = e.responseText;
+         // if it contains no HTML text type tags then code block it
+         if (!tmpDiv.jq("br, p")){
                tmpDiv.innerHTML = "<code><pre>"
                +htmlEntities(e.responseText)+"</pre></code>";
-            else
-               tmpDiv.innerHTML = e.responseText;
-          }
-         // copy content to content
-         var docContent = jq(".content"); var eleContent = tmpDiv.jq(".content");
-         if (docContent && eleContent) docContent.innerHTML = eleContent.innerHTML;
-         else {
-            docContent.innerHTML = tmpDiv.innerHTML;
          }
-         createLinks(docContent);
-         // count content keywords
-         var words = docContent.innerText.replace(/\W+/g, " ").trim().split(" ");
-         jq("meta[name=\"keywords\"]").content = getKeywords(words);
+         // copy tmpDiv to body content
+         var docContent = jq(".content");
+         var eleContent = tmpDiv.jq(".content");
+         if(docContent){
+            if (eleContent) docContent.innerHTML = eleContent.innerHTML;
+            else if(eleContent = tmpDiv.jq("body"))
+               docContent.innerHTML = eleContent.innerHTML;
+            else docContent.innerHTML = tmpDiv.innerHTML;
+            // create links to any menu titles mentioned in content
+<?php if (navbar::$createLinks) { ?>
+            createLinks(docContent);
+<?php } ?>
+            // count content keywords
+            var words = docContent.innerText.replace(/\W+/g, " ")
+               .trim().split(" ");
+            jq("meta[name=\"keywords\"]").content = getKeywords(words);
+         }
       }
    }
 

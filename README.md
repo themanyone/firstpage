@@ -14,6 +14,7 @@ Brought to you by [The Nerd Show](//thenerdshow.com/)
 * Reduce duplicate work
 * [Cache management](#use-github-as-a-blogging-platform) for remote pages
 * Supports [Markdown](#supports-markdown) and HTML.
+* Site search with [regex](http://php.net/manual/en/function.preg-match.php)
 * Updates [sitemaps](https://www.sitemaps.org/index.html) and [RSS feeds](https://www.mnot.net/rss/tutorial/) as content changes
 * Use [GitHub as a blogging platform](#use-github-as-a-blogging-platform)
 * [Unlimited styles and layouts](#adding-new-styles)

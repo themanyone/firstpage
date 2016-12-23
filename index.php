@@ -75,6 +75,7 @@ $navbar = new navbar;
       <ul>
          <li>Menus stay updated</li>
          <li>Supports <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
+         <li>Site search with <a href="http://php.net/manual/en/function.preg-match.php">regex</a></li>
          <li>Caching of remote pages</li>
          <li>Unlimited styles and layouts</li>
          <li>Automatic keyword generation</li>
