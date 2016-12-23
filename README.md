@@ -128,7 +128,8 @@ An arrow ![Arrow](images/externallink.png) pops up next to external links that r
 1. Get [FirstPage from GitHub](https://github.com/themanyone/firstpage)
 1. Optionally update [marked.js](https://github.com/chjj/marked).
 2. See that the latest marked.min.js is in the js folder of this project.
-3. Edit this README.md or replace with custom markdown.
+3. Use this README.md as a template or replace with custom markdown.
+4. Edit the `navbar.phpx`, `.httaccess` and other files as desired.
 3. Copy this project to a web server.
 
 ## Testing
@@ -166,7 +167,9 @@ It may be desirable to recreate some cached files to make sure they are up to da
 
 Add "alternate stylesheet" tags to FirstPage's `index.html` and these styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.phpx`.
 
-Create the .css file and add a link to it like this:
+*Create a new .css file using `css/xmas.css` as a template.
+* Add a link to it like this:
+
 ```
 <link rel="alternate stylesheet"
 title="myStyle" type="text/css" href="css/myStyle.css?v=1.0">

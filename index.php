@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en-US"><head data-headings="help">
 <meta charset="utf-8"><!-- -*- coding: utf-8 -*- -->
 <title>FirstPage</title>
-<meta property="og:title" content="FirstPage" />
+<meta property="og:title" content="FirstPage PHP Menu generator" />
 <meta name="copyright" content="© 2017 Henry Kroll www.thenerdshow.com" />
 <meta name="description" content="A PHP Menu generator and content manager for files." />
 <meta property="og:description" content="A PHP Menu generator and content manager for files." />

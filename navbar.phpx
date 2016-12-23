@@ -146,9 +146,9 @@ class navbar {
       $title = $this->tsearch($c, ['/^title:\W*(.{3,23})\W*/', '/^#+\s*(.{3,23})/',
                      '/\s*<title>\W*(.{3,23})\W*<\/title>/',
                      '/<h.>\s*(.{3,23})\s*<\/h.>/', '/^\W*([\w\s]{10,23})$/']);
-      $description =  $this->tsearch($c, ['/^description:\s*(.*)/',
-               '/name[ ="\']*description.*content[ ="\']+([^"\']*)/',
-               '/<p>\s*(.*)\s*<\/p>/', '/^([^#:><]{25}.*)/']);
+      $description =  $this->tsearch($c, ['/^description:\s*(.{0,40})/',
+               '/name\s*=\s*["\']description.*content\s*=\s*["\']([^"\']{0,40})/',
+               '/<p>\s*(.{0,40})\s*<\/p>/', '/^([^#:><"\']{25}.*)/']);
       if (!$description) $description = "No Description";
       if (!$title) $title = $f->getFileName();
       // check if document describes a remote URL
@@ -427,7 +427,7 @@ function htmlEntities(str) {
       // get title and description
       var c = e.responseText;
       var isTitle = tsearch(c, [/^title:\W*(.{3,23})\W*/, /#+\s*(.{3,23})/,
-                     /\s*<title>\W*(.{3,23})\W*<\/title>/,
+                     /\s*<title>\W*(.{3,23}).*<\/title>/,
                      /<h.>\s*(.{3,23})\s*<\/h.>/, /\W*([\w\s]{10,23})/]);
       var isDesc = tsearch(c, [/^description:\s*(.*)/,
                /name[ ="\']*description.*content[ ="\']+([^"\']*)/,
@@ -496,7 +496,8 @@ function htmlEntities(str) {
       if (styles && p) styles["preferred"] = p;
       var h = "";
       forAll(styles, function(e){
-         h += '<li><a class="btn" href="javascript:setActiveStyleSheet(\''
+         h += '<li><a class="btn" title="'+ e.rel +'"'
+         + ' href="javascript:setActiveStyleSheet(\''
          + e.title + '\')">' + e.title + "</a></li>\n";
       });
       sl.insertAdjacentHTML('afterEnd', ' <li> <a href="javascript:void(0);"'
