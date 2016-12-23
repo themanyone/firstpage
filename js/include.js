@@ -111,13 +111,15 @@ var insertHTML = function(ele, html) {
  */
 
 /** new XMLHttpRequest Object
- * @param {url}         url       - url of request
+ * @param {string}      url       - url of request
  * @param {XHRCallback} callback  - function
+ * @param {string}      method    - optional "GET" or "POST"
+ * @param {element}     element   - optional formData element
  * example: XHR("docs/foo", doMarkup) //add docs/foo to markup
  */
-var XHR = function(url, callback) {
+var XHR = function(url, callback, method="GET", send=null) {
     var request = new XMLHttpRequest();
-    request.open("GET", url, true);
+    request.open(method, url, true);
     request.onreadystatechange = function() {
         return (this.readyState == 4
             &&  (this.status == 0 || 
@@ -125,10 +127,17 @@ var XHR = function(url, callback) {
         this.status == 304 || this.status == 1223))
             ?  callback(request)
             :  null;
-    };
-    request.send(null);
+    }; request.send(send);
+    return false;
 };
-
+/** submit form
+ * @param {fe} form element  - url of request
+ * @param {cb}     callback  - function
+ * example: XHR(myForm, doMarkup);
+ */
+window.submitForm = function submitForm(fe, cb){
+   return XHR(fe.action, cb, fe.method, new FormData (fe));
+};
 /** include: dynanamic HTML include
  * @param {string} url         - url
  * @param {string} cssElements - css selector of elements to fetch

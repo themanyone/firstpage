@@ -31,6 +31,7 @@ limitations under the License.
 <link rel="stylesheet" title="preferred" type="text/css" href="css/preferred.css?v=1.4">
 <link rel="alternate stylesheet" title="plain" type="text/css" href="css/plain.css?v=1.2">
 <link rel="alternate stylesheet" title="xmas" type="text/css" href="css/xmas.css?v=1.2">
+<link rel="alternate stylesheet" title="bigorange" type="text/css" href="css/bigorange.css?v=1.0">
 <script src="js/include.js"></script>
 <script src="js/marked.min.js"></script>
 <script src="js/styleswitcher.js"></script>
@@ -51,7 +52,7 @@ data-ad-format="auto"></ins>
 </script>
 </div>
 
-<form method="post" action="search.phpx" onsubmit="return submitForm(this);">
+<form method="post" action="search.phpx" onsubmit="return submitForm(this, displayIt);">
 <div id="search">
 <input name="_q" type="search" placeholder="search" required>
 <input type="submit" value=" "><input type="hidden" name="_firstpage">

@@ -347,14 +347,14 @@ function htmlEntities(str) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
-// rewrite navbar http links to use XHR displayIt
 (function(){
    "use strict";
-   // rewrite page links
+   // fetch a page
    window.fetch = function(u){
       XHR(u + "?_firstpage", displayIt);
    };
 
+// rewrite navbar http links to use XHR displayIt
 <?php if (navbar::$createLinks) { ?>
 
    function replaceInNodes(nodes, regExp, flags, lnk, desc){
@@ -396,7 +396,7 @@ function htmlEntities(str) {
    }
 
 <?php } ?>
-   function displayIt(e){
+   window.displayIt= function displayIt(e){
       function getKeywords(e){
          var obj = {}; var out=[], ret=[];
          /* count each keyword */
@@ -505,16 +505,10 @@ function htmlEntities(str) {
 <?php } ?>
    }, false);
    
-   function displaySearch(s){
-      jq(".content").innerHTML += s;
-   }
-   window.submitForm = function submitForm(oFormElement){
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function(){ displayIt (xhr); }
-      xhr.open (oFormElement.method, oFormElement.action, true);
-      xhr.send (new FormData (oFormElement));
+   window.onbeforeunload = function(){
+      fetch("/");
       return false;
-   }
+   };
    
    marked.setOptions({
      renderer: new marked.Renderer(),

@@ -1,7 +1,7 @@
-<div class="content wide">
+<div class="content">
 <?php
 /*
- * searchbar.phpx
+ * search.phpx
  *
  * Searches files in server directories.
  *
@@ -50,8 +50,8 @@ class search {
    
    private function scan(){
    // scan the folder for documents
-      foreach (new DirectoryIterator(".") as $f) { // iterator
-         if (in_array($f->getExtension(), $this->filetypes) ) { // in $this->filetypes
+      foreach (new DirectoryIterator(".") as $f) {
+         if (in_array($f->getExtension(), $this->filetypes) ) {
             // limit results
             if (!$this->limit) {
                echo "<p class=search>Search returned > 99 results! Try refining search terms.</p>";
