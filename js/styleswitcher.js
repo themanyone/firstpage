@@ -2,7 +2,7 @@
 "use strict";
 function setActiveStyleSheet(title) {
   var i, a, main;
-  if(title=="null") title = "preferred";
+  if(title=="null") title = "Preferred";
   for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
     if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
       a.disabled = true;
@@ -44,7 +44,8 @@ function readCookie(name) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(';');
   for(var i=0;i < ca.length;i++) {
-    var c = ca[i].replace(/ /g,'');
+    /* var c = ca[i].replace(/ /g,''); */
+    var c = ca[i];
     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
   }
   return null;

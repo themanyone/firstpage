@@ -12,6 +12,9 @@ margin: auto;
    position: relative;
    left: -50%;
 }
+input[name="nav"], label[name="nav"] {
+	display: none;
+}
 .content {
    display:block;
    background-color: #FFFFFF;

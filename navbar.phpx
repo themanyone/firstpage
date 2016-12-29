@@ -186,11 +186,14 @@ class navbar {
       // (re)build the menu?
       if ($this->nav){
          $f = fopen($this->nav, 'w+');
+         fwrite($f, "<input type=\"radio\" name=\"nav\" id=\"nav_close\">"
+            ."<input type=\"radio\" name=\"nav\" id=\"nav_rot\" value=show>"
+            ."<input type=\"radio\" name=\"nav\" id=\"nav_open\" value=show>"
+            ."<label name=\"nav\" class=\"fa fa-times fa-2x\" for=\"nav_close\"></label>"
+            ."<label name=\"nav\" class=\"fa fa-refresh fa-2x\" for=\"nav_rot\"></label>"
+            ."<label name=\"nav\" class=\"fa fa-bars fa-2x\" for=\"nav_open\"></label>"
+            );
          fwrite($f, "\n<nav><ul>\n");
-         fwrite($f, "   <li class='home'><a title=\"go home\" href=\"/\">".
-         "home</a></li>\n");
-         fwrite($f, "   <li class='rot'><a title=\"menu rotation\"".
-                  " href=\"javascript:toggleNav();\"></a></li>\n");
          foreach ($this->headings as $heading){
             fwrite($f, "   <li><a href='javascript:void(0);' class='btn'>".
                         "$heading</a>\n");
@@ -295,53 +298,6 @@ class navbar {
 }  }
 ?>
 <script>
-function toggleNav(){
-   "use strict";
-   var nav; if (nav = jq("nav")){
-      var content = jq(".content");
-      var cs = content.style;
-      var ns = nav.style;
-      // go horizontal
-      if (ns.width){
-         // set explicity for css animation effect
-         cs.left = nav.getBoundingClientRect().left+"px";
-         cs.top = jq(".rot").getBoundingClientRect().bottom+"px";
-         ns.width ="";
-         setTimeout(function(){cs.position = "";}, 1000);
-      forAll(jqa("nav > ul > li > a"))(
-         function (e){ e.style.width=""; });
-      forAll(jqa(".sub"), function(e){ e.style.top = e.style.left=""; });
-      } else {
-      // go vertical
-         var w = 0; // widest
-         forAll(jqa("nav > ul > li > a"))(
-            function (e){
-               var gw = e.getBoundingClientRect().width
-               if (gw > w) w = gw;
-            });
-         var c = 0;
-         // widen the buttons to w px
-         forAll(jqa("nav > ul > li > a"))(
-            function (e){ if (c++ > 1) e.style.width=w+"px"; });
-         // set top and left twice for css animation
-         // cs.marginRight = "7px";
-         cs.position = "absolute";
-         cs.top = content.getBoundingClientRect().top+"px";
-         cs.left = content.getBoundingClientRect().left+"px";
-         cs.top = content.getBoundingClientRect().top+"px";
-         cs.left = w+15+"px";
-         // shrink menu width to button width w
-         ns.width = w+"px";
-         // move all sub menus off to the right
-         forAll(jqa(".sub"), function(e){
-            var pe = e.parentElement.getBoundingClientRect();
-            e.style.top=pe.top+"px";
-            e.style.left=pe.right+"px";
-         });
-      }
-   }
-}
-
 function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -485,20 +441,20 @@ function htmlEntities(str) {
          }, false);
       });
  <?php } if (navbar::$createLinks) { ?>
-
       createLinks(jq(".content"));
  <?php } if (navbar::$styles) { ?>
 
       // put alternate styles on menu
+      // fixme: spaces in title aren't linking properly
       var sl = jq("nav > ul > li:last-child");
-      var styles = jqa("link[rel=\"alternate stylesheet\"]");
-      var p = jq("link[rel=\"stylesheet\"][title=\"preferred\"]");
-      if (styles && p) styles["preferred"] = p;
+      var styles = jqa("link[rel$=\"stylesheet\"]");
       var h = "";
       forAll(styles, function(e){
-         h += '<li><a class="btn" title="'+ e.rel +'"'
-         + ' href="javascript:setActiveStyleSheet(\''
-         + e.title + '\')">' + e.title + "</a></li>\n";
+        if(e.title){
+             h += '<li><a class="btn" title="'+ e.rel +'"'
+             + ' href="javascript:setActiveStyleSheet(\''
+             + e.title + '\')">' + e.title + "</a></li>\n";
+         }
       });
       sl.insertAdjacentHTML('afterEnd', ' <li> <a href="javascript:void(0);"'
       + 'class="btn">styles</a><ul class="sub">' + h + '</ul></li>');

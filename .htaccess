@@ -111,7 +111,7 @@ RewriteEngine on
 # If you're not running FirstPage in a subdirectory on your site, but still getting lots
 # of 404 errors beyond the front page, you could instead try:
 #
-RewriteBase /firstpage/
+RewriteBase /
 
 
 # If your users receive the message "Sorry, logging in from a different domain is not permitted"

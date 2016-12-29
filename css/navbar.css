@@ -1,36 +1,97 @@
+/* three-state button */
+input[name="nav"] { /* hide radio buttons */
+    visibility: hidden;
+    position: absolute;
+}
+label.fa[name="nav"] {
+	display:inline-block;
+    width:31px;
+    height:31px;
+    cursor: pointer;
+    position: absolute;
+    visibility: hidden;
+}
+input:checked ~ label.fa {
+    visibility: hidden; /* hide labels on check */
+}
+label.fa[for="nav_open"], /* make open label visible */
+input#nav_close:checked ~
+label.fa[for="nav_open"] {
+    visibility: visible;
+	position: relative;
+}
+input#nav_open:checked ~ label[for="nav_rot"]{
+	visibility: visible; /* make next label visible */
+}
+input#nav_rot:checked ~ label[for="nav_close"]{
+	visibility: visible; /* make next label visible */
+}
+
+/* menu show / hide */
+input[value="show"]:checked ~ nav {
+	display: inline-block;
+}
+input#nav_rot:checked ~ .content {
+    margin-left: 145px;
+}
+input#nav_rot:checked ~ nav {
+	width: 140px;
+	height: 100%;
+	margin-top: 5px;
+	left: 3px;
+    -ms-transform: translate(0px, 30px); /* IE 9 */
+    -webkit-transform: translate(0px, 30px); /* Safari */
+    transform: translate(0px, 30px);
+}
+input#nav_rot:checked ~ nav .btn {
+	width: 140px;
+}
+input#nav_rot:checked ~ nav .sub {
+	position: relative; /* expand menu */
+	margin-left: 10px;
+}
+input#nav_rot:checked ~ nav .sub a {
+	width: 130px;
+}
+nav {
+	display: none;
+	position: absolute;
+   margin-bottom: 5px;
+   transition: all 0.5s ease-in-out;
+}
 nav ul {
    list-style-type: none;
    padding: 0;
    margin: 0;
 }
 nav > ul > li {
-   display: inline-block;
-   vertical-align: top;
+   display: inline-block; /* expand */
 }
-nav a {
-   height: 19px;
-   display: inline-block;
+nav .btn {
+   height: 30px;
+   width: 100%;
+   font-size: 16pt;
+   padding-left: 5px;
+   display: inline-block; /* expand */
    text-decoration: none;
-   background-color: #ADD8E6;
-   background-repeat: no-repeat;
-   background-position: 2px 2px;
-   padding: 1px 1px 0 1px;
+   color: white;
+   text-shadow: 2px 2px black;
+   font-weight: bold;
+   background: transparent url('button_blue.png') no-repeat;
+   background-size: 200% 100%;
+   background-position: 0 0;
+   white-space: nowrap;
 }
-nav li.home > a {
-   background-image: url('b_home.png');
-   width:18px;
-   color: transparent;
-}
-nav li.rot > a {
-   background-image: url('rotate18.png');
-   width:18px;
+nav .btn:hover {
+	background-size: 200% 100%;
+	background-position: 100% 0;
 }
 nav .sub {
-   display: none;
-   position: absolute;
-   overflow-y: auto;
+   display: none; /* hide sub-menu */
+   position: absolute; /* drop over */
+   overflow: visible;
    z-index: 10;
 }
-nav > ul > li:hover > .sub {
-   display: block;
+li:hover > .sub {
+   display: block; /* show sub-menu */
 }

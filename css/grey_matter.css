@@ -1,0 +1,43 @@
+@import url("preferred.css?v=1.4");
+nav { /* show arrow */
+   width: 24px;
+   height: 30px;
+   overflow: hidden;
+   display: inline-block;
+}
+input[value="show"]:checked ~ nav, nav:hover {
+   width: auto;
+   height: auto;
+   overflow: visible;
+}
+nav .btn {
+   background-color: #222;
+   background-image: none;
+   text-shadow: none;
+   padding-top: 3px;
+   color: lightgrey;
+   width: 100%;
+}
+nav .btn:hover {
+   background-color: grey;
+}
+nav > ul > li > .btn:before {
+   /* background: transparent url('arrow_blue.png') no-repeat 0px 1px; */
+   height:32px;
+   width: 22px;
+   float:left;
+   content: '+';
+   transition: all 0.5s ease-in-out;
+}
+nav > ul > li > .btn:hover:before {
+   content: '-';
+}
+body {
+	background: #b72424;
+	background: -moz-radial-gradient(center, ellipse cover, #b72424 0%, #492727 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#b72424), color-stop(100%,#492727));
+	background: -webkit-radial-gradient(center, ellipse cover, #b72424 0%,#492727 100%);
+	background: -o-radial-gradient(center, ellipse cover, #b72424 0%,#492727 100%);
+	background: -ms-radial-gradient(center, ellipse cover, #b72424 0%,#492727 100%);
+	background: radial-gradient(center, ellipse cover, #b72424 0%,#492727 100%);
+}

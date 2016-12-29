@@ -28,20 +28,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<link rel="stylesheet" title="preferred" type="text/css" href="css/preferred.css?v=1.4">
-<link rel="alternate stylesheet" title="plain" type="text/css" href="css/plain.css?v=1.2">
-<link rel="alternate stylesheet" title="xmas" type="text/css" href="css/xmas.css?v=1.2">
-<link rel="alternate stylesheet" title="bigorange" type="text/css" href="css/bigorange.css?v=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" title="Preferred" type="text/css" href="css/preferred.css?v=1.4">
+<link rel="alternate stylesheet" title="Old School" type="text/css" href="css/plain.css?v=1.2">
+<link rel="alternate stylesheet" title="Christmas" type="text/css" href="css/xmas.css?v=1.2">
+<link rel="alternate stylesheet" title="Big Orange" type="text/css" href="css/bigorange.css?v=1.0">
+<link rel="alternate stylesheet" title="Grey Matter" type="text/css" href="css/grey_matter.css?v=1.0">
 <script src="js/include.js"></script>
 <script src="js/marked.min.js"></script>
 <script src="js/styleswitcher.js"></script>
 
 </head>
 <body>
-
+<!--
 <div style="margin:auto;width:99%">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Responsive -->
+ Responsive
 <ins class="adsbygoogle"
 style="display:block"
 data-ad-client="ca-pub-6719667455972380"
@@ -50,12 +52,12 @@ data-ad-format="auto"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>
+</div> -->
 
 <form method="post" action="search.phpx" onsubmit="return submitForm(this, displayIt);">
 <div id="search">
 <input name="_q" type="search" placeholder="search" required>
-<input type="submit" value=" "><input type="hidden" name="_firstpage">
+<label class="fa fa-search fa-lg" for="submit"> <input id="submit" type="submit" value=" "></label><input type="hidden" name="_firstpage">
 </div></form>
 
 
