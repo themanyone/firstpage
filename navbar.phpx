@@ -445,7 +445,6 @@ function htmlEntities(str) {
  <?php } if (navbar::$styles) { ?>
 
       // put alternate styles on menu
-      // fixme: spaces in title aren't linking properly
       var sl = jq("nav > ul > li:last-child");
       var styles = jqa("link[rel$=\"stylesheet\"]");
       var h = "";
