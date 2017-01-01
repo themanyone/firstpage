@@ -31,7 +31,7 @@ class search {
    }
    private function search($f){
       $c = file_get_contents($f);
-      forEach(split("\n", $c) as $l){
+      forEach(explode("\n", $c) as $l){
          preg_match("/.{0,99}(".$this->s.").{0,99}/", $l, $found, PREG_OFFSET_CAPTURE);
          if (isSet($found[0])){ // $found[1];
             echo "<p class=search>".$f."<br>";
@@ -66,8 +66,8 @@ class search {
       $this->scan();
    }
 }
-if ($_POST[_q]) {
-   $ret = new search($_POST[_q]);
+if ($_POST["_q"]) {
+   $ret = new search($_POST["_q"]);
 }
 ?>
 </div>

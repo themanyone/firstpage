@@ -61,7 +61,7 @@ class navbar {
 
    private function tsearch($contents, $patterns, $top = 10){
       // Search top of contents string for array of patterns
-      $lines = split("\n", $contents, $top);
+      $lines = explode("\n", $contents, $top);
       if (count($lines) < $top) $top = count($lines);
       if (!$top) return "";
       $found = array();

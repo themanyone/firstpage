@@ -68,7 +68,7 @@ function __autoload($class_name) {
 $navbar = new navbar;
 ?>
    <div class="content shadow rounded">
-      
+      <a href="sitemap.rss"><img class="right" src="images/mooserss.png" title="RSS feed"></a>
       
       <h1>FirstPage</h1>
       
@@ -83,8 +83,7 @@ $navbar = new navbar;
          <li>Unlimited styles and layouts</li>
          <li>Automatic keyword generation</li>
          <li>Supports responsive web design</li>
-         <li>Publishes an <a href="https://www.mnot.net/rss/tutorial/">RSS feed</a> of menu contents</li>
-         <li>Builds <a href="https://www.sitemaps.org/index.html">sitemaps</a> for crawlers to chew on</li>
+         <li>Maintains an <a href="sitemap.rss">RSS feed</a>, <a href="sitemap.xml">sitemap</a></li>
          <li>Deploys and backs up easily</li>
          <li>No database required or used</li>
          <li>Updates via GIT, FTP, panel, etc.</li>
@@ -109,7 +108,6 @@ $navbar = new navbar;
       <h2>New Developments</h2>
       
       <ul>
-         <li>Site Search</li>
          <li>More styles :)</li>
       </ul>
       
