@@ -22,7 +22,7 @@ Brought to you by [The Nerd Show](//thenerdshow.com/)
 * Rewrites links [so they don't reload the page](#fewer-page-reloads)
 * Automatic [keyword generation](#automatic-keyword-generation)
 * Works without a database
-* Deploy and back up easily
+* [Deploy and back up easily](#installation)
 * Update via [GIT](//git-scm.com/download/win), FTP, panel, etc.
 
 This project is now **[available on GitHub](//github.com/themanyone/firstpage)**.
@@ -52,7 +52,7 @@ The menu updates itself, but sometimes it is desirable to add a local file that 
 
 * Hoard (mirror) the remote content. Copy the remote content to the server and keep it there. Mirrors may have to be manually updated from time to time, but they are a nearly foolproof way of backing things up.
 
-## HTML Shortcuts
+## HTML Shortcut Files
 
 Shortcuts can be in either HTML or Markdown format. It may be easier to use Markdown for this (see the next section).
 
@@ -77,9 +77,9 @@ url : http://foo.com/file | Download from foo.com (no cache).
 
 \* Files without `headings:` go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
 
-## Markdown Shortcuts
+## Markdown Shortcut Files
 
-To add a remote file link to the menu, sitemap, and rss feeds, create a placeholder (a web shortcut) for it and upload it to the server. Shortcuts can be in either HTML or Markdown format.
+To add an off-site link to the menu, sitemap, and rss feeds, create a local placeholder (a shortcut file) for it and upload it to the server. Shortcuts can be in either HTML or Markdown format.
 
 ```
 headings : docs, help
@@ -87,7 +87,7 @@ title : The Nerd Show
 description : Nerd stuff
 url : https://thenerdshow.com
 ```
-The above shortcut instruct FirstPage to put a link to The Nerd Show in the menu under "docs" and "help." The order of the elements is not critical. Try it! There are no real restrictions on what can go in a shortcut. This README is actually a cache shortcut that FirstPage uses to cache a more up-to-date copy of itself in the menu under "docs".
+The above shortcut file, when uploaded to the server, instruct FirstPage to put a link to The Nerd Show in the menu under "docs" and "help." The order of the elements is not critical. Try it! There are no real restrictions on what can go in a shortcut. This README is actually a cache shortcut that FirstPage uses to cache a more up-to-date copy of itself in the menu under "docs".
 
 ## Use GitHub as a Blogging Platform
 
@@ -144,11 +144,11 @@ You may test this project
 
 **Javascript** TypeError: Cannot read property 'insertAdjacentHTML' of null
 
-Edit the included .htaccess file with your site names and directories. Especially `RewriteBase /firstpage/` should be changed to `/` if FirstPage is to manage the server root.
+Edit the included .htaccess file and replace `test.k` with your domain name at the bottom of the file. Customize things as desired. In addition, `RewriteBase /firstpage/` should be changed to `/` if FirstPage is to manage the server root.
 
 ### Rebuild sitemaps
 
-If the menu or cached items are not updating, check folder permissions, review the error logs, and rebuild the menus. Folder permissions should be write and exec by PHP e.g. 775 or 755. File permissions are 644 except for sitemap.* which are managed by PHP.
+If the menu or cached items are not updating, check folder permissions, review the error logs, and rebuild the menus. Folder permissions should be write and exec owned by the process running PHP e.g. apache 775 or 755. File permissions are 644 except for sitemap.* which are managed by PHP.
 
 1. Delete all the sitemap files. `rm sitemap.*`
 2. Refresh the page (Press `F5` in the browser) to rebuild them.
@@ -157,7 +157,7 @@ If the menu or cached items are not updating, check folder permissions, review t
 
 ### Rebuild cached files
 
-It may be desirable to recreate some cached files to make sure they are up to date before that ad campaign runs, etc.
+It may be desirable to rebuild some cached files to make sure they are up to date before that ad campaign runs, etc.
 
 1. Delete the .cache file(s) that need rebuilt. `rm myShortcut.md.cache`
 2. Touch the shortcut with an earlier date. `touch -t 01010000 myShortcut.md`
@@ -165,9 +165,9 @@ It may be desirable to recreate some cached files to make sure they are up to da
 
 ## Adding New Styles
 
-Add "alternate stylesheet" tags to FirstPage's `index.html` and these styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.phpx`.
+Add "alternate stylesheet" tags to FirstPage's `index.php` and these styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.phpx`.
 
-*Create a new .css file using `css/xmas.css` as a template.
+*Create a new .css file using one of the existing stylesheets as a template.
 * Add a link to it like this:
 
 ```
@@ -175,4 +175,4 @@ Add "alternate stylesheet" tags to FirstPage's `index.html` and these styles wil
 title="myStyle" type="text/css" href="css/myStyle.css?v=1.0">
 ```
 
-The `v=1.0` version number forces an update. Google Chrome is refusing to update .css files. Firefox has trouble updating .css files, too. Change the version number, and it will update.
+If design changes are not showing up the `v=1.0` version number may be incremented to force browsers to fetch an updated CSS file. Cache expiration is set to one day in `.httaccess` but should probably be set longer for production sites. 

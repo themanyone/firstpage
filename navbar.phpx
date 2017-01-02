@@ -393,7 +393,8 @@ function htmlEntities(str) {
       if (isDesc && isSet(isDesc[0]))
          jq("meta[name=\"description\"]").content =
          jq("meta[property=\"og:description\"]").content = isDesc[0];
-      window.tmpDiv = document.createElement("div");
+      // change to window.tmpDiv for debugging this section
+      var tmpDiv = document.createElement("div");
       if (tmpDiv) {
          // put markdown into temporary div
          // if coming from internal markdown request (link click)
@@ -401,7 +402,6 @@ function htmlEntities(str) {
             // strip off markdown headers and mark it up to HTML
             tmpDiv.innerHTML = marked(e.responseText
                .replace(/([\w\-]+:.+\n)*/, ""));
-            console.log(tmpDiv);
             // otherwise it could be HTML
          } else tmpDiv.innerHTML = e.responseText;
          // if it contains no HTML text type tags then code block it

@@ -77,13 +77,13 @@ $navbar = new navbar;
      
       <ul>
          <li>Menus stay updated</li>
-         <li>Supports <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
          <li>Site search with <a href="http://php.net/manual/en/function.preg-match.php">regex</a></li>
          <li>Caching of remote pages</li>
          <li>Unlimited styles and layouts</li>
          <li>Automatic keyword generation</li>
          <li>Supports responsive web design</li>
-         <li>Maintains an <a href="sitemap.rss">RSS feed</a>, <a href="sitemap.xml">sitemap</a></li>
+         <li>Indexes <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
+         <li>Maintains <a href="sitemap.rss">RSS feeds</a>, <a href="sitemap.xml">sitemaps</a></li>
          <li>Deploys and backs up easily</li>
          <li>No database required or used</li>
          <li>Updates via GIT, FTP, panel, etc.</li>
