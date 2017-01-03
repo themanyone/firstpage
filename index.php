@@ -72,18 +72,16 @@ $navbar = new navbar;
       
       <h1>FirstPage</h1>
       
-      <p>SEO, content management, and blogging using conventional files. Drop files onto the server and FirstPage takes care of the rest!
-      </p>
+      <p>Build websites without restrictions. Orgnanize existing content.</p>
      
       <ul>
-         <li>Menus stay updated</li>
+         <li>Menus update themselves</li>
+         <li>Generates <a href="sitemap.rss">RSS feeds</a>, <a href="sitemap.xml">sitemaps</a></li> 
          <li>Site search with <a href="http://php.net/manual/en/function.preg-match.php">regex</a></li>
          <li>Caching of remote pages</li>
          <li>Unlimited styles and layouts</li>
-         <li>Automatic keyword generation</li>
          <li>Supports responsive web design</li>
          <li>Indexes <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> and HTML</li>
-         <li>Maintains <a href="sitemap.rss">RSS feeds</a>, <a href="sitemap.xml">sitemaps</a></li>
          <li>Deploys and backs up easily</li>
          <li>No database required or used</li>
          <li>Updates via GIT, FTP, panel, etc.</li>
@@ -91,7 +89,7 @@ $navbar = new navbar;
 
       <h2>Why This Exists</h2>
       
-      <p>We can use our existing HTML pages. It doesn't require anything special except putting some optional data in the head tag to organize them. We can use a mix of HTML pages and Markdown.</p>
+      <p>We can use plain old HTML or markdown files. It doesn't require anything special except putting optional categories in the head tag to organize them. We can use a mix of HTML and Markdown.</p>
 
       <p><b>Less duplicate work.</b> We develop dozens of <a href="https://github.com/themanyone">GitHub projects</a> ourselves and syndicating them to a dozen websites and mirrors with hundreds of files each. Updating their menus, links, RSS feeds, and sitemaps became tiresome. We did not want the additional complexity of a database on top of all that. We like being able to back up our websites with a quick copy.</p>
       

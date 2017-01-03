@@ -146,6 +146,8 @@ You may test this project
 
 Edit the included .htaccess file and replace `test.k` with your domain name at the bottom of the file. Customize things as desired. In addition, `RewriteBase /firstpage/` should be changed to `/` if FirstPage is to manage the server root.
 
+Permission denied errors: Check permissions. Make sure documents are owned by the process running PHP. See below.
+
 ### Rebuild sitemaps
 
 If the menu or cached items are not updating, check folder permissions, review the error logs, and rebuild the menus. Folder permissions should be write and exec owned by the process running PHP e.g. apache 775 or 755. File permissions are 644 except for sitemap.* which are managed by PHP.
