@@ -54,7 +54,7 @@ data-ad-format="auto"></ins>
 </script>
 </div> -->
 
-<form method="post" action="search.phpx" onsubmit="return submitForm(this, displayIt);">
+<form method="post" action="search.php" onsubmit="return submitForm(this, displayIt);">
 <div id="search">
 <input name="_q" type="search" placeholder="search" required>
 <label class="fa fa-search fa-lg" for="submit"> <input id="submit" type="submit" value=" "></label><input type="hidden" name="_firstpage">

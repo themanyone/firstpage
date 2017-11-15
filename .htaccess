@@ -16,7 +16,7 @@ Options -MultiViews
 DirectoryIndex index.php index.html
 
 # Add type for FirstPage php extensions
-AddType application/x-httpd-php .phpx
+AddType application/x-httpd-php phpx
 
 # Serve resources with the proper media types (f.k.a. MIME types).
 #
@@ -333,8 +333,7 @@ RewriteRule "(^|/)\." - [F]
 # If you're not running FirstPage in a subdirectory on your site, but still getting lots
 # of 404 errors beyond the front page, you could instead try:
 #
-RewriteBase /
-
+#RewriteBase /
 
 # If your users receive the message "Sorry, logging in from a different domain is not permitted"
 # you must make sure your login form is served from the same hostname as your site pages.
@@ -352,9 +351,10 @@ RewriteRule (^\.|/\.) - [F]
 
 # redirect viewable root documents through FirstPage
 RewriteCond %{REQUEST_URI} !index\.php
+RewriteCond %{REQUEST_URI} !directory\.php
 RewriteCond %{REQUEST_URI} !\/$
 RewriteCond %{QUERY_STRING} !^_firstpage$
 RewriteCond %{REQUEST_URI} \/([^.]+\.)?(md|php|html|.*.cache|LICENSE)$
-RewriteRule . http://test.k/?_u=%1%2 [QSA,L]
+RewriteRule . http://firstpage.k/?_u=%1%2 [QSA,L]
 
 </IfModule>
