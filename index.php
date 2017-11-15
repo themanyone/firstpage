@@ -63,7 +63,7 @@ data-ad-format="auto"></ins>
 
 <?php
 function __autoload($class_name) {
-    require_once $class_name . '.phpx';
+    require_once $class_name . '.php';
 }
 $navbar = new navbar;
 ?>

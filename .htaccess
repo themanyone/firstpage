@@ -333,7 +333,7 @@ RewriteRule "(^|/)\." - [F]
 # If you're not running FirstPage in a subdirectory on your site, but still getting lots
 # of 404 errors beyond the front page, you could instead try:
 #
-#RewriteBase /
+RewriteBase /
 
 # If your users receive the message "Sorry, logging in from a different domain is not permitted"
 # you must make sure your login form is served from the same hostname as your site pages.
@@ -351,7 +351,8 @@ RewriteRule (^\.|/\.) - [F]
 
 # redirect viewable root documents through FirstPage
 RewriteCond %{REQUEST_URI} !index\.php
-RewriteCond %{REQUEST_URI} !directory\.php
+RewriteCond %{REQUEST_URI} !navbar\.php
+RewriteCond %{REQUEST_URI} !search\.php
 RewriteCond %{REQUEST_URI} !\/$
 RewriteCond %{QUERY_STRING} !^_firstpage$
 RewriteCond %{REQUEST_URI} \/([^.]+\.)?(md|php|html|.*.cache|LICENSE)$

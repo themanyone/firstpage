@@ -40,11 +40,11 @@ data-cache="http://foo.com"    | Show cached copy of foo.com
 data-expires=4                 | Fetch new copy after 4 hours.
 data-url="http://foo.com/file" | Get from foo.com (no cache).
 
-\* Files without `data-headings` go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
+\* Files without `data-headings` go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.php`.
 
 ## Adding Custom Menu Items
 
-The menu updates itself, but sometimes it is desirable to add a local file that isn't being noticed by the menu (recognized file types are configurable in navbar.phpx) or add a remote URL to the menu, sitemap, and RSS feeds. There are several ways to do this.
+The menu updates itself, but sometimes it is desirable to add a local file that isn't being noticed by the menu (recognized file types are configurable in navbar.php) or add a remote URL to the menu, sitemap, and RSS feeds. There are several ways to do this.
 
 * Cache the remote content. This requires creating a *HTML shortcut*, an HTML file containing the necessary `<head data-cache` and optional `data-expires` headers. 
 
@@ -75,7 +75,7 @@ cache : http://foo.com    | Display cached copy of foo.com
 expires : 4               | Fetch new copy after 4 hours.
 url : http://foo.com/file | Download from foo.com (no cache).
 
-\* Files without `headings:` go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.phpx`.
+\* Files without `headings:` go into an *Other* menu category where they may not show up because this feature can be turned off in `navbar.php`.
 
 ## Markdown Shortcut Files
 
@@ -129,7 +129,7 @@ An arrow ![Arrow](images/externallink.png) pops up next to external links that r
 1. Optionally update [marked.js](https://github.com/chjj/marked).
 2. See that the latest marked.min.js is in the js folder of this project.
 3. Use this README.md as a template or replace with custom markdown.
-4. Edit the `navbar.phpx`, `.httaccess` and other files as desired.
+4. Edit the `navbar.php`, `.httaccess` and other files as desired.
 3. Copy this project to a web server.
 
 ## Testing
@@ -167,7 +167,7 @@ It may be desirable to rebuild some cached files to make sure they are up to dat
 
 ## Adding New Styles
 
-Add "alternate stylesheet" tags to FirstPage's `index.php` and these styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.phpx`.
+Add "alternate stylesheet" tags to FirstPage's `index.php` and these styles will show up in the menu. The listing of stylesheets in the menu may be turned off in `navbar.php`.
 
 *Create a new .css file using one of the existing stylesheets as a template.
 * Add a link to it like this:
